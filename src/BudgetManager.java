@@ -69,7 +69,7 @@ public class BudgetManager {
         saveBudgetMonthDataToCSV(month);
     }
 
-    public void editCategoryBudget(String category, double newAmount, Month month) throws BudgetNotFoundException, IOException {
+    public void editCategoryBudget(String category, double newAmount, Month month) throws BudgetNotFoundException{
 
         if (budgets.containsKey(category.toLowerCase())) {
             Budget budget = budgets.get(category.toLowerCase());
