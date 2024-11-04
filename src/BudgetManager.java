@@ -61,7 +61,7 @@ public class BudgetManager {
 
         if (budgets.containsKey(category.toLowerCase())) {
             budgets.remove(category.toLowerCase());
-            // System.out.println("Budget for category " +category.toLowerCase()+ " has been deleted.");
+            
         } else {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
