@@ -61,7 +61,7 @@ public class BudgetManager {
 
         if (budgets.containsKey(category.toLowerCase())) {
             budgets.remove(category.toLowerCase());
-            
+
         } else {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
@@ -74,7 +74,7 @@ public class BudgetManager {
         if (budgets.containsKey(category.toLowerCase())) {
             Budget budget = budgets.get(category.toLowerCase());
             budget.setAmount(newAmount);
-            // System.out.println("Budget for category " +category.toLowerCase()+ "updated to " +newAmount);
+           
         } else {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
