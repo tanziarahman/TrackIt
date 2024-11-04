@@ -1,0 +1,2 @@
+0,200.0,Utility,Electricity Bill,2024-11-03,Adding electricity bill
+2,100.0,Travel,Fuel,2024-11-03,Refuled car
