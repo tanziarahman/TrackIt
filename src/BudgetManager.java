@@ -30,7 +30,7 @@ public class BudgetManager {
         saveBudgetMonthDataToCSV(month);
     }
 
-    public void addToIncome(double additionalIncome, Month month) {
+    public void addToIncome( Month month,double additionalIncome) {
         monthlyIncome += additionalIncome;
         saveBudgetMonthDataToCSV(month);
     }
