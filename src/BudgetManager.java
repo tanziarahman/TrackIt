@@ -125,7 +125,7 @@ public class BudgetManager {
     }
 
 
-    public void showAllBudgets(Month month) {
+    public void showMonthIncomeAndBudget(Month month) {
 
 
         if (budgets.isEmpty() && monthlyIncome == 0) {
