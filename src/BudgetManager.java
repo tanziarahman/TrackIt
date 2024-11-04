@@ -127,7 +127,7 @@ public class BudgetManager {
 
     public void showAllBudgets(Month month) {
 
-        
+
         if (budgets.isEmpty() && monthlyIncome == 0) {
             System.out.println("No data found for " + month.name().toLowerCase());
             return;
