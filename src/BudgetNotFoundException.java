@@ -1,6 +1,6 @@
 public class BudgetNotFoundException extends Exception{
-    public BudgetNotFoundException(String msg){
+    public BudgetNotFoundException(String message){
 
-        super(msg);
+        super(message);
     }
 }
