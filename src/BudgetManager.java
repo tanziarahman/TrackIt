@@ -135,7 +135,7 @@ public class BudgetManager {
 
 
         System.out.println("Income for " + month.name().toLowerCase() + ": " + this.monthlyIncome);
-        System.out.println();
+        
         System.out.println("Budgets for " + month.name().toLowerCase() + ":");
         for (Map.Entry<String, Budget> entry : budgets.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue().getAmount());
