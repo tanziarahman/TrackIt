@@ -20,7 +20,7 @@ public class BudgetManager {
         return categoryManager;
     }
 
-    public void SetMonthlyIncome(double monthlyIncome, Month month) {
+    public void SetMonthlyIncome( Month month,double monthlyIncome) {
         this.monthlyIncome = monthlyIncome;
         saveBudgetMonthDataToCSV(month);
     }
