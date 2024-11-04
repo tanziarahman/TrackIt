@@ -25,7 +25,7 @@ public class BudgetManager {
         saveBudgetMonthDataToCSV(month);
     }
 
-    public void editIncome( Month month,double newMonthlyIncome) {
+    public void editIncome(double newMonthlyIncome,Month month) {
         monthlyIncome = newMonthlyIncome;
         saveBudgetMonthDataToCSV(month);
     }
