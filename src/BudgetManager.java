@@ -39,13 +39,20 @@ public class BudgetManager {
         return monthlyIncome;
     }
 
-    public void setCategoryBudget(String category, double amount, Month month) throws BudgetExistsException {
+    public void setCategoryBudget(String category, double amount, Month month) throws BudgetExistsException,CategoryDoesnotExistsException {
+
+        if(!categoryManager.categoryExists(category)){
+            throw new CategoryDoesnotExistsException("Category " +category+ " doesn't exist. Please enter a valid category.");
+            //return;
+        }
 
         if (!budgets.containsKey(category.toLowerCase())) {
             budgets.put(category.toLowerCase(), new Budget(category, amount));
         } else {
-            throw new BudgetExistsException("Budget is already set for category " + category.toLowerCase() + ". If you want, you can edit it." + "\n");
+            throw new BudgetExistsException("Budget is already set for category " + category.toLowerCase() + ". If you want, you can edit it.");
         }
+
+
 
         saveBudgetMonthDataToCSV(month);
     }
