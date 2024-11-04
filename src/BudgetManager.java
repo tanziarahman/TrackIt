@@ -74,7 +74,7 @@ public class BudgetManager {
         if (budgets.containsKey(category.toLowerCase())) {
             Budget budget = budgets.get(category.toLowerCase());
             budget.setAmount(newAmount);
-           
+
         } else {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
@@ -118,7 +118,7 @@ public class BudgetManager {
                 writer.write(budget.getCategory().toLowerCase() + "," + budget.getAmount());
                 writer.newLine();
             }
-            System.out.println("Data for " + month.name().toLowerCase() + " saved successfully.");
+           // System.out.println("Data for " + month.name().toLowerCase() + " saved successfully.");
         } catch (IOException e) {
             System.out.println("Error saving data for " + month.name().toLowerCase());
         }
