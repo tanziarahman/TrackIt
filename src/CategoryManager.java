@@ -9,45 +9,30 @@ public class CategoryManager {
     public ArrayList getCategories(){
         return categories;
     }
-    public void addCategory(String category) {
+    public void addCategory(String category) throws CategoryExistsException {
         if (categoryExists(category)) {
-            try {
-                throw new CategoryExistsException("Category <<" + category + ">> already exists");
-            }
-            catch (CategoryExistsException e) {
-                e.printStackTrace();
-            }
-        }
-        else{
+            throw new CategoryExistsException("Category <<" + category + ">> already exists");
+        } else {
             categories.add(new Category(category));
         }
     }
-
-    public void addCustomSubCategoryInCategory(String category, String subCategory){
+    public void addCustomSubCategoryInCategory(String category, String subCategory) throws CategoryDoesnotExistsException {
         if (!categoryExists(category)) {
-            try {
-                throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exists. So, sub-category <"+subCategory+"> can't be added.");
-            }
-            catch (CategoryDoesnotExistsException e) {
-                e.printStackTrace();
-            }
+            throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist. So, sub-category <" + subCategory + "> can't be added.");
         }
         else {
             categories.stream().filter(c -> c.getType().equals(category)).findFirst().ifPresent(c -> c.addSubCategory(subCategory));
         }
     }
-    public String showSubCategories(String category){
-        if(!categoryExists(category)){
-            try {
-                throw new CategoryDoesnotExistsException("Category <<"+category+">> doesn't exists.");
-            }
-            catch (CategoryDoesnotExistsException e) {
-                e.printStackTrace();
-            }
+
+    public String showSubCategories(String category) throws CategoryDoesnotExistsException {
+        if (!categoryExists(category)) {
+            throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist.");
         }
-        Category matchingCategory = categories.stream().filter(c -> c.getType().equals(category)).findFirst().get();
+        Category matchingCategory = categories.stream().filter(c -> c.getType().equals(category)).findFirst().orElseThrow(() -> new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist.")); // This will ensure that if the filter fails, the exception is thrown.
         return matchingCategory.showSubCategories();
     }
+
     public String showCategories(){
         StringBuilder string = new StringBuilder();
         for(Category cp : categories){

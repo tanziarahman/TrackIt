@@ -12,14 +12,9 @@ public class Category {
     public ArrayList<String> getSubcategories() {
         return subCategories;
     }
-    public void addSubCategory(String subCategory) {
-        if (subCategoryExists(subCategory)){
-            try {
-                throw new SubCategoryExistsException("Sub Category <" + subCategory + "> already exists under <<" + getType() + ">> category");
-            }
-            catch (SubCategoryExistsException e) {
-                System.out.println(e.getMessage());
-            }
+    public void addSubCategory(String subCategory) throws SubCategoryExistsException{
+        if (subCategoryExists(subCategory)) {
+            throw new SubCategoryExistsException("Sub Category <" + subCategory + "> already exists under <<" + getType() + ">> category");
         }
         else {
             subCategories.add(subCategory);
