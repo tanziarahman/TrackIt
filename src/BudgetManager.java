@@ -88,7 +88,7 @@ public class BudgetManager {
         budgets.clear();
         monthlyIncome = 0.0;
 
-        
+
         String fileName = month.name().toLowerCase() + "Budget.csv";
         File file = new File(fileName);
 
