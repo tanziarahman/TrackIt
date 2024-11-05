@@ -84,6 +84,11 @@ public class BudgetManager {
 
 
     public void loadMonthBudgetData(Month month) {
+
+        budgets.clear();
+        monthlyIncome = 0.0;
+
+        
         String fileName = month.name().toLowerCase() + "Budget.csv";
         File file = new File(fileName);
 
@@ -126,6 +131,8 @@ public class BudgetManager {
 
 
     public void showMonthlyIncomeAndBudget(Month month) {
+
+        loadMonthBudgetData(month);
 
 
         if (budgets.isEmpty() && monthlyIncome == 0) {
