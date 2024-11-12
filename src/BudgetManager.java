@@ -151,6 +151,19 @@ public class BudgetManager {
         }
     }
 
+
+    public double getBudgetAmountForCategory(String category) throws BudgetNotFoundException{
+
+        Budget budget=budgets.get(category.toLowerCase());
+
+        if(budget!=null){
+            return budget.getAmount();
+        }
+        else {
+            throw new BudgetNotFoundException("No budget found for category " +category.toLowerCase());
+        }
+    }
+
     public boolean budgetExists(String category){
         return budgets.containsKey(category.toLowerCase());
     }
