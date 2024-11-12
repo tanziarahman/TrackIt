@@ -24,18 +24,13 @@ public class FileTransactionStorage implements TransactionStorage {
     }
 
     @Override
-    public List<Transaction> loadAllTransactions() throws IOException {
+    public List<Transaction> loadAllTransactions() {
         List<Transaction> transactions = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                try {
-                    transactions.add(Transaction.fromString(line));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        
+
+
+
         return transactions;
     }
+
 }
