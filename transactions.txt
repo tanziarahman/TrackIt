@@ -1,2 +1,3 @@
-0,200.0,Utility,Electricity Bill,2024-11-03,Adding electricity bill
-2,100.0,Travel,Fuel,2024-11-03,Refuled car
+2,160.0,Food,Groceries,2023-11-06,Updated weekly groceries shopping
+3,50.0,Food,Dining Out,2023-11-10,Dinner at restaurant
+4,20.0,Food,Dining Out,2023-11-15,Dinner at restaurant

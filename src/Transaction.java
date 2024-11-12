@@ -40,13 +40,30 @@ public class Transaction {
     }
 
     public static Transaction fromString(String transactionString) throws Exception {
+        transactionString = transactionString.trim();
+        if (transactionString.isEmpty()) {
+            throw new Exception("Empty transaction string provided.");
+        }
+        System.out.println("Parsing transactionString: " + transactionString);
         String[] parts = transactionString.split(",");
-        int transactionID = Integer.parseInt(parts[0]);
-        double amount = Double.parseDouble(parts[1]);
-        String category = parts[2];
-        String subCategory = parts[3];
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4]);
-        String description = parts[5];
-        return new Transaction(transactionID, amount, category, subCategory, date, description);
+        if (parts.length != 6) {
+            throw new Exception("Invalid input format. Expected 6 parts, but got " + parts.length + " in string: " + transactionString);
+        }
+        try {
+            int transactionID = Integer.parseInt(parts[0].trim());
+            double amount = Double.parseDouble(parts[1].trim());
+            String category = parts[2].trim();
+            String subCategory = parts[3].trim();
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4].trim());
+            String description = parts[5].trim();
+            return new Transaction(transactionID, amount, category, subCategory, date, description);
+        } catch (NumberFormatException e) {
+            throw new Exception("Invalid number format in transaction string: " + transactionString, e);
+        } catch (Exception e) {
+            throw new Exception("Invalid date format in transaction string. Expected yyyy-MM-dd: " + transactionString, e);
+        }
     }
+
+
+
 }
