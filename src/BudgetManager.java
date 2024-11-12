@@ -151,5 +151,9 @@ public class BudgetManager {
         }
     }
 
+    public boolean budgetExists(String category){
+        return budgets.containsKey(category.toLowerCase());
+    }
+
 
 }
