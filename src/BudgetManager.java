@@ -10,10 +10,14 @@ public class BudgetManager {
     private Map<String, Budget> budgets;
     private double monthlyIncome;
 
-    public BudgetManager(CategoryManager categoryManager) {
+    public BudgetManager(CategoryManager categoryManager){
         this.categoryManager = categoryManager;
         budgets = new HashMap<>();
         monthlyIncome = 0.0;
+    }
+
+    public  Map<String,Budget> getBudgets(){
+        return budgets;
     }
 
     public CategoryManager getCategoryManager() {
