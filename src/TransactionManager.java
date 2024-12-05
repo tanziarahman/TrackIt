@@ -136,4 +136,19 @@ public class TransactionManager implements TransactionManagerInterface {
             return false;
         }
     }
+
+    public double totalTransactionInACategory(String category){
+        double sum=0;
+        for(Transaction tr:transactions){
+            if(tr.getCategory()==category){
+                sum+=tr.getAmount();
+            }
+        }
+        return sum;
+    }
+    public List<Transaction> getTransactions(){
+        return transactions;
+    }
+
+
 }
