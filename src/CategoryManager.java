@@ -1,5 +1,5 @@
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CategoryManager {
     private ArrayList<Category> categories;
@@ -58,5 +58,43 @@ public class CategoryManager {
     public boolean categoryExists(String category){
         boolean exists = categories.stream().anyMatch(c -> category.equals(c.getType()));
         return exists;
+    }
+
+    public void readFile(){
+        String csvFile = "Categories and Subcategories.csv";
+        String line;
+        String csvSeparator = ",";
+        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
+            while((line=br.readLine())!=null){
+                String[] data = line.split(csvSeparator);
+                if(data.length>0){
+                    String categoryName = data[0];
+                    Category category = new Category(categoryName);
+                    for (int i = 1; i < data.length; i++) {
+                        category.addSubCategory(data[i].trim());
+                    }
+                    categories.add(category);
+                }
+            }
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void writeFile() {
+        String csvFile = "Categories and Subcategories.csv";
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile))) {
+            for (Category category : categories) {
+                StringBuilder line = new StringBuilder(category.getType());
+                for (String subCategory : category.getSubcategories()) {
+                    line.append(",").append(subCategory.trim());
+                }
+                bw.write(line.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
     }
 }
