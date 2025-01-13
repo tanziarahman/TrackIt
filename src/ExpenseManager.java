@@ -14,6 +14,7 @@ public class ExpenseManager {
         this.budgetManager = budgetManager;
         this.transactionManager = transactionManager;
         this.expenses = new ArrayList<>();
+        calculateExpense();
     }
     public Month getMonth(){
         return month;
@@ -55,6 +56,16 @@ public class ExpenseManager {
             System.out.println("Error writing to file: " + e.getMessage());
         }
     }
+
+    private void calculateExpense(){
+        for(Transaction tr : transactionManager.getTransactions()){
+            String ct = tr.getCategory();
+            double am = tr.getAmount();
+            Expense exp = new Expense(ct,am);
+            expenses.add(exp);
+        }
+    }
+
     public String showExpenses(){
         StringBuilder st = new StringBuilder();
         String m = this.month.toString();
@@ -69,3 +80,4 @@ public class ExpenseManager {
         return  st.toString().trim();
     }
 }
+
