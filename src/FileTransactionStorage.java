@@ -41,7 +41,7 @@ public class FileTransactionStorage implements TransactionStorage {
 
         File file = new File(fileName);
         if (!file.exists()) {
-            return transactions; // Return empty list if the file doesn't exist
+            return transactions;
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
