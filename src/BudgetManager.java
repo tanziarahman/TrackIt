@@ -9,9 +9,12 @@ public class BudgetManager {
     CategoryManager categoryManager;
     private Map<String, Budget> budgets;
     private double monthlyIncome;
+    private Month month;
 
-    public BudgetManager(CategoryManager categoryManager){
+
+    public BudgetManager(CategoryManager categoryManager,Month month){
         this.categoryManager = categoryManager;
+        this.month=month;
         budgets = new HashMap<>();
         monthlyIncome = 0.0;
     }
@@ -136,7 +139,7 @@ public class BudgetManager {
 
 
         if (budgets.isEmpty() && monthlyIncome == 0) {
-            System.out.println("No data found for " + month.name().toLowerCase());
+            System.out.println("No data found for " + StringFormatter.capitalizeFirstLetter(month.name()));
             return;
         }
 
@@ -145,7 +148,7 @@ public class BudgetManager {
         System.out.println("..................................");
         System.out.println("Budgets for " + month.name().toLowerCase() + ":");
         for (Map.Entry<String, Budget> entry : budgets.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getAmount());
+            System.out.println(StringFormatter.capitalizeFirstLetter(entry.getKey()) + ": " + entry.getValue().getAmount());
 
         }
 
