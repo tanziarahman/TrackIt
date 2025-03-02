@@ -171,6 +171,14 @@ public class BudgetManager {
         }
     }
 
+
+    public void checkBudgetLimit() throws BudgetExceededIncomeException {
+        double totalBudget = budgets.values().stream().mapToDouble(Budget::getAmount).sum();
+        if (totalBudget > monthlyIncome) {
+            throw new BudgetExceededIncomeException();
+        }
+    }
+
     public boolean budgetExists(String category){
         return budgets.containsKey(category.toLowerCase());
     }
