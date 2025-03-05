@@ -173,8 +173,13 @@ public class BudgetManager {
     }
 
 
+    public double getTotalBudget(){
+        return budgets.values().stream().mapToDouble(Budget::getAmount).sum();
+    }
+
+
     public void checkBudgetLimit() throws BudgetExceededIncomeException {
-        double totalBudget = budgets.values().stream().mapToDouble(Budget::getAmount).sum();
+        double totalBudget = getTotalBudget();
         if(totalBudget>monthlyIncome){
             throw new BudgetExceededIncomeException("Your total budget for " + StringFormatter.capitalizeFirstLetter(month.name()) + " is now " + totalBudget+ ". Which exceeds your monthly income of " +monthlyIncome+ ". You might want to double-check your plan!");
         }
