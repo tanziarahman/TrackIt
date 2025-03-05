@@ -2,6 +2,7 @@ import java.io.*;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ExpenseManager {
     private Month month;
@@ -14,48 +15,11 @@ public class ExpenseManager {
         this.budgetManager = budgetManager;
         this.transactionManager = transactionManager;
         this.expenses = new ArrayList<>();
-        calculateExpense();
     }
     public Month getMonth(){
         return month;
     }
 
-    public void readExpensesFile(){
-        String m = month.toString();
-        String f = m.toLowerCase();
-        String csvFile = f+"expenses.csv";
-        String line;
-        String csvSeparator = ",";
-        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
-            while((line=br.readLine())!=null){
-                String[] data = line.split(csvSeparator);
-                if(data.length>0){
-                    String c = data[0];
-                    String a = data[1];
-                    double am = Double.parseDouble(a);
-                    expenses.add(new Expense(c,am));
-                }
-            }
-        }
-        catch(IOException e){
-            System.out.println(e.getMessage());
-        }
-    }
-    public void writeExpensesToFile() {
-        String m = month.toString();
-        String f = m.toLowerCase();
-        String csvFile = f + "expenses.csv";
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile))) {
-            for (Expense expense : expenses) {
-                String line = expense.getCategory() + "," + expense.getAmount();
-                bw.write(line);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
-        }
-    }
 
     private void calculateExpense(){
         for(Transaction tr : transactionManager.getTransactions()){
@@ -66,18 +30,31 @@ public class ExpenseManager {
         }
     }
 
-    public String showExpenses(){
+    public String showAllExpenses(){
+        calculateExpense();
         StringBuilder st = new StringBuilder();
         String m = this.month.toString();
         st.append("Expenses of " + m + ":\n");
-        int count = 1;
-        for(Expense exp: expenses){
-            String a = String.valueOf(exp.getAmount());
-            String c = String.valueOf(count);
-            st.append(c +". " + exp.getCategory() + " : " + a + "\n");
-            count++;
+        for(Expense ex : expenses){
+            st.append(showExpenseForCategory(ex.getCategory()));
         }
         return  st.toString().trim();
     }
-}
 
+    public String showExpenseForCategory(String category){
+        StringBuilder st = new StringBuilder();
+        for(Map.Entry<String, Budget> bg : budgetManager.getBudgets().entrySet()){
+            if(bg.getKey().equals(category)){
+                String amount = String.valueOf(bg.getValue().getAmount());
+                st.append("Budget in "+bg.getKey()+": "+amount + "\n");
+            }
+        }
+        for(Transaction tr : transactionManager.getTransactions()){
+            if(tr.getCategory().equals(category)){
+                String amount = String.valueOf(tr.getAmount());
+                st.append("Expense: "+ amount + "\n");
+            }
+        }
+        return st.toString();
+    }
+}

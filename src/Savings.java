@@ -11,4 +11,7 @@ public class Savings {
     public double getAmount(){
         return  amount;
     }
+    public void setAmount(double am){
+        this.amount = am;
+    }
 }
