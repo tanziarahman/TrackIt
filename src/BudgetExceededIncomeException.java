@@ -1,5 +1,5 @@
 public class BudgetExceededIncomeException extends Exception {
-    public BudgetExceededIncomeException(){
-        super();
+    public BudgetExceededIncomeException(String msg){
+        super(msg);
     }
 }

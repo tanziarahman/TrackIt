@@ -1,6 +1,6 @@
 import java.io.*;
 import java.time.Month;
-import java.util.ArrayList;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,13 +10,16 @@ public class BudgetManager {
     private Map<String, Budget> budgets;
     private double monthlyIncome;
     private Month month;
+    private Year year;
 
 
-    public BudgetManager(CategoryManager categoryManager,Month month){
+    public BudgetManager(CategoryManager categoryManager,Month month,Year year){
         this.categoryManager = categoryManager;
         this.month=month;
+        this.year=year;
         budgets = new HashMap<>();
         monthlyIncome = 0.0;
+        loadMonthBudgetData();
     }
 
     public  Map<String,Budget> getBudgets(){
@@ -27,26 +30,26 @@ public class BudgetManager {
         return categoryManager;
     }
 
-    public void SetMonthlyIncome( double monthlyIncome,Month month) {
+    public void SetMonthlyIncome( double monthlyIncome) {
         this.monthlyIncome = monthlyIncome;
-        saveBudgetMonthDataToCSV(month);
+        saveBudgetMonthDataToCSV();
     }
 
 
-    public void addToIncome(double additionalIncome,Month month) {
+    public void addToIncome(double additionalIncome) {
         monthlyIncome += additionalIncome;
-        saveBudgetMonthDataToCSV(month);
+        saveBudgetMonthDataToCSV();
     }
 
     public double getMonthlyIncome() {
         return monthlyIncome;
     }
 
-    public void setCategoryBudget(String category, double amount, Month month) throws BudgetExistsException,CategoryDoesnotExistsException {
+    public void setCategoryBudget(String category, double amount) throws BudgetExistsException,CategoryDoesnotExistsException{
 
         if(!categoryManager.categoryExists(category)){
             throw new CategoryDoesnotExistsException("Category " +category+ " doesn't exist. Please enter a valid category.");
-            //return;
+
         }
 
         if (!budgets.containsKey(category.toLowerCase())) {
@@ -55,12 +58,10 @@ public class BudgetManager {
             throw new BudgetExistsException("Budget is already set for category " + category.toLowerCase() + ". If you want, you can edit it.");
         }
 
-
-
-        saveBudgetMonthDataToCSV(month);
+        saveBudgetMonthDataToCSV();
     }
 
-    public void deleteCategoryBudget(String category, Month month) throws BudgetNotFoundException {
+    public void deleteCategoryBudget(String category) throws BudgetNotFoundException {
 
         if (budgets.containsKey(category.toLowerCase())) {
             budgets.remove(category.toLowerCase());
@@ -69,10 +70,10 @@ public class BudgetManager {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
 
-        saveBudgetMonthDataToCSV(month);
+        saveBudgetMonthDataToCSV();
     }
 
-    public void editCategoryBudget(String category, double newAmount, Month month) throws BudgetNotFoundException{
+    public void editCategoryBudget(String category, double newAmount) throws BudgetNotFoundException{
 
         if (budgets.containsKey(category.toLowerCase())) {
             Budget budget = budgets.get(category.toLowerCase());
@@ -82,17 +83,17 @@ public class BudgetManager {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
 
-        saveBudgetMonthDataToCSV(month);
+        saveBudgetMonthDataToCSV();
     }
 
 
-    public void loadMonthBudgetData(Month month) {
+    public void loadMonthBudgetData() {
 
         budgets.clear();
         monthlyIncome = 0.0;
 
 
-        String fileName = month.name().toLowerCase() + "Budget.csv";
+        String fileName = month.name().toLowerCase() +year.getValue() +  "Budget.csv";
         File file = new File(fileName);
 
         if (!file.exists()) {
@@ -115,9 +116,9 @@ public class BudgetManager {
     }
 
 
-    public void saveBudgetMonthDataToCSV(Month month) {
+    public void saveBudgetMonthDataToCSV() {
 
-        String fileName = month.name().toLowerCase() + "Budget.csv";
+        String fileName = month.name().toLowerCase() +year.getValue() + "Budget.csv";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             writer.write("Income," + this.monthlyIncome);
@@ -126,20 +127,20 @@ public class BudgetManager {
                 writer.write(budget.getCategory().toLowerCase() + "," + budget.getAmount());
                 writer.newLine();
             }
-           // System.out.println("Data for " + month.name().toLowerCase() + " saved successfully.");
+
         } catch (IOException e) {
             System.out.println("Error saving data for " + month.name().toLowerCase());
         }
     }
 
 
-    public void showAllBudgets(Month month) {
+    public void showAllBudgets() {
 
-        loadMonthBudgetData(month);
+        loadMonthBudgetData();
 
 
         if (budgets.isEmpty() && monthlyIncome == 0) {
-            System.out.println("No data found for " + StringFormatter.capitalizeFirstLetter(month.name()));
+            System.out.println("No data found for " + month.name().toLowerCase());
             return;
         }
 
@@ -174,10 +175,11 @@ public class BudgetManager {
 
     public void checkBudgetLimit() throws BudgetExceededIncomeException {
         double totalBudget = budgets.values().stream().mapToDouble(Budget::getAmount).sum();
-        if (totalBudget > monthlyIncome) {
-            throw new BudgetExceededIncomeException();
+        if(totalBudget>monthlyIncome){
+            throw new BudgetExceededIncomeException("Your total budget for " + StringFormatter.capitalizeFirstLetter(month.name()) + " is now " + totalBudget+ ". Which exceeds your monthly income of " +monthlyIncome+ ". You might want to double-check your plan!");
         }
     }
+
 
     public boolean budgetExists(String category){
         return budgets.containsKey(category.toLowerCase());
