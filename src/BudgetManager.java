@@ -136,27 +136,23 @@ public class BudgetManager {
 
     public void showAllBudgets() {
 
-        loadMonthBudgetData();
+        int index=1;
 
-
-        if (budgets.isEmpty() && monthlyIncome == 0) {
-            System.out.println("No data found for " + month.name().toLowerCase());
-            return;
-        }
-
-
-        System.out.println("Income for " + month.name().toLowerCase() + ": " + this.monthlyIncome);
-        System.out.println("..................................");
-        System.out.println("Budgets for " + month.name().toLowerCase() + ":");
         for (Map.Entry<String, Budget> entry : budgets.entrySet()) {
-            System.out.println(StringFormatter.capitalizeFirstLetter(entry.getKey()) + ": " + entry.getValue().getAmount());
+            System.out.println(index + ". " +StringFormatter.capitalizeFirstLetter(entry.getKey()) + ": " + entry.getValue().getAmount());
+            index++;
 
         }
 
 
         if (budgets.isEmpty()) {
-            System.out.println("No budgets set for " + month.name().toLowerCase() + ".");
+            System.out.println("No budgets set for " + month.name().toLowerCase()+ " " +year + ".");
         }
+    }
+
+
+    public void showMonthlyIncome(){
+        System.out.println("Income for " + StringFormatter.capitalizeFirstLetter(month.name()) + " " +year+ " : " + this.monthlyIncome);
     }
 
 
