@@ -46,7 +46,30 @@ public class BudgetUI {
         }
     }
 
-    
+
+    public void editBudget(){
+
+        String category=getCategoryFromUserInput(CYAN+ "Enter the number of the budget you want to edit: " +RESET);
+
+        if (category==null){
+            System.out.println("No budgets available right now.");
+            return;
+        }
+
+        double amount=getValidAmount(CYAN+ "Enter new amount (In BDT): " +RESET);
+
+        try {
+            budgetManager.editCategoryBudget(category,amount);
+            System.out.println(GREEN + "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " updated to BDT " +amount +"." +RESET);
+            try {
+                budgetManager.checkBudgetLimit();
+            } catch (BudgetExceededIncomeException e) {
+                System.out.println(YELLOW + e.getMessage() + RESET);
+            }
+        } catch (BudgetNotFoundException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
 
     public int getUserCategoryChoice(String prompt) {
         while (true) {
