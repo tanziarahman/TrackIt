@@ -143,11 +143,6 @@ public class BudgetManager {
             index++;
 
         }
-
-
-        if (budgets.isEmpty()) {
-            System.out.println("No budgets set for " + month.name().toLowerCase()+ " " +year + ".");
-        }
     }
 
 
