@@ -42,7 +42,7 @@ public class BudgetUI {
                 System.out.println(YELLOW + e.getMessage() + RESET);
             }
         } catch (BudgetExistsException | CategoryDoesnotExistsException e) {
-            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+            System.out.println(RED + e.getMessage() + RESET);
         }
     }
 
@@ -67,7 +67,7 @@ public class BudgetUI {
                 System.out.println(YELLOW + e.getMessage() + RESET);
             }
         } catch (BudgetNotFoundException e) {
-            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+            System.out.println(RED + e.getMessage() + RESET);
         }
     }
 
@@ -85,7 +85,7 @@ public class BudgetUI {
             budgetManager.deleteCategoryBudget(category);
             System.out.println(GREEN + "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " deleted successfully." +RESET);
         } catch (BudgetNotFoundException e) {
-            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+            System.out.println(RED + e.getMessage() + RESET);
         }
     }
 
@@ -152,7 +152,7 @@ public class BudgetUI {
     }
 
 
-    
+
     public int getUserCategoryChoice(String prompt) {
         while (true) {
             System.out.print(prompt);
