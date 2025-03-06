@@ -95,7 +95,9 @@ public class BudgetUI {
         if (budgetManager.getBudgets().isEmpty()) {
             System.out.println("No budgets available right now.");
         }
-        budgetManager.showAllBudgets();
+        else {
+            budgetManager.showAllBudgets();
+        }
     }
 
 
