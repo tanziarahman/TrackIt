@@ -98,8 +98,61 @@ public class BudgetUI {
         budgetManager.showAllBudgets();
     }
 
-    
 
+
+    public void manageBudgets(){
+
+        while (true) {
+
+            budgetMenu();
+
+            if (scanner.hasNextInt()) {
+                int choice = scanner.nextInt();
+
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        setBudget();
+                        break;
+                    case 2:
+                        editBudget();
+                        break;
+                    case 3:
+                        deleteBudget();
+                        break;
+                    case 4:
+                        showBudgets();
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        System.out.println(RED + "⚠ Invalid choice! Try again." + RESET);
+                        System.out.println();
+                }
+            } else {
+                System.out.println(RED + "⚠ Invalid choice! Try again." + RESET);
+                scanner.nextLine();
+            }
+
+        }
+    }
+
+
+    public void budgetMenu(){
+
+        System.out.println(CYAN + "\n💰 Budget Management" + RESET);
+        System.out.println(GREEN + "[1] Set Budget");
+        System.out.println("[2] Edit Budget");
+        System.out.println("[3] Delete Budget");
+        System.out.println("[4] View Budgets");
+        System.out.println("[5] Go Back to Main Menu" + RESET);
+        System.out.println();
+        System.out.print(YELLOW + "Choose an option: " + RESET);
+    }
+
+
+    
     public int getUserCategoryChoice(String prompt) {
         while (true) {
             System.out.print(prompt);
