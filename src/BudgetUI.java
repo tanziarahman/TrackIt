@@ -89,6 +89,17 @@ public class BudgetUI {
         }
     }
 
+
+    public void showBudgets(){
+
+        if (budgetManager.getBudgets().isEmpty()) {
+            System.out.println("No budgets available right now.");
+        }
+        budgetManager.showAllBudgets();
+    }
+
+    
+
     public int getUserCategoryChoice(String prompt) {
         while (true) {
             System.out.print(prompt);
