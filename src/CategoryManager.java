@@ -6,7 +6,7 @@ public class CategoryManager {
     public CategoryManager(){
         categories = new ArrayList<>();
     }
-    public ArrayList getCategories(){
+    public ArrayList<Category> getCategories(){
         return categories;
     }
     public void addCategory(String category) throws CategoryExistsException {
