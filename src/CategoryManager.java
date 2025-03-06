@@ -1,14 +1,18 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryManager {
     private ArrayList<Category> categories;
     public CategoryManager(){
         categories = new ArrayList<>();
+        readFile();
     }
+
     public ArrayList<Category> getCategories(){
         return categories;
     }
+
     public void addCategory(String category) throws CategoryExistsException {
         if (categoryExists(category)) {
             throw new CategoryExistsException("Category <<" + category + ">> already exists");
@@ -16,6 +20,7 @@ public class CategoryManager {
             categories.add(new Category(category));
         }
     }
+
     public void addCustomSubCategoryInCategory(String category, String subCategory) throws CategoryDoesnotExistsException {
         if (!categoryExists(category)) {
             throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist. So, sub-category <" + subCategory + "> can't be added.");
@@ -29,32 +34,74 @@ public class CategoryManager {
         if (!categoryExists(category)) {
             throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist.");
         }
-        Category matchingCategory = categories.stream().filter(c -> c.getType().equals(category)).findFirst().orElseThrow(() -> new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist.")); // This will ensure that if the filter fails, the exception is thrown.
-        return matchingCategory.showSubCategories();
+
+        Category matchingCategory = categories.stream()
+                .filter(c -> c.getType().equals(category))
+                .findFirst()
+                .orElseThrow(() -> new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist."));
+
+        List<String> subcategories = matchingCategory.getSubcategories();
+
+        // Formatting the output
+        StringBuilder string = new StringBuilder();
+        string.append("\n========================\n");
+        string.append("        Category: ").append(category).append("\n");
+        string.append("========================\n");
+
+        if (subcategories.isEmpty()) {
+            string.append("No subcategories available.\n");
+        } else {
+            int index = 1;
+            for (String subCategory : subcategories) {
+                string.append(index++).append(". ").append(subCategory).append("\n");
+            }
+        }
+
+        string.append("========================\n");
+        return string.toString();
     }
 
     public String showCategories(){
         StringBuilder string = new StringBuilder();
-        for(Category cp : categories){
-            string.append("- "+cp.getType()+"\n");
+        string.append("\n========================\n");
+        string.append("  Available Categories   \n");
+        string.append("========================\n");
+        int index = 1;
+        for (Category cp : categories) {
+            string.append(index++).append(". ").append(cp.getType()).append("\n");
         }
         return string.toString().trim();
     }
-    public String showCategoriesWithSubCategories(){
+
+    public String showCategoriesWithSubCategories() {
         StringBuilder string = new StringBuilder();
-        for(Category c : categories){
-            string.append("<<"+c.getType()+">>\n");
-            if(c.getSubcategories().isEmpty()){
-                string.append("** No sub-categories available under category "+ c.getType() +" **\n");
-            }
-            else{
-                for (int i = 0; i < c.getSubcategories().size(); i++) {
-                    string.append((i + 1) + ". " + c.getSubcategories().get(i) + "\n");
+
+        if (categories.isEmpty()) {
+            string.append("\n========================\n");
+            string.append("   No Categories Available\n");
+            string.append("========================\n");
+            return string.toString();
+        }
+
+        for (Category c : categories) {
+            string.append("\n========================\n");
+            string.append("        Category: ").append(c.getType()).append("\n");
+            string.append("========================\n");
+
+            List<String> subcategories = c.getSubcategories();
+            if (subcategories.isEmpty()) {
+                string.append("No subcategories available.\n");
+            } else {
+                int index = 1;
+                for (String subCategory : subcategories) {
+                    string.append(index++).append(". ").append(subCategory).append("\n");
                 }
             }
+            string.append("========================\n");
         }
-        return string.toString().trim();
+        return string.toString();
     }
+
     public boolean categoryExists(String category){
         boolean exists = categories.stream().anyMatch(c -> category.equals(c.getType()));
         return exists;
