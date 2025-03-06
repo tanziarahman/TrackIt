@@ -71,6 +71,24 @@ public class BudgetUI {
         }
     }
 
+
+    public void deleteBudget(){
+
+        String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to delete: " +RESET);
+
+        if (category == null) {
+            System.out.println("No budgets available right now.");
+            return;
+        }
+
+        try {
+            budgetManager.deleteCategoryBudget(category);
+            System.out.println(GREEN + "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " deleted successfully." +RESET);
+        } catch (BudgetNotFoundException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+
     public int getUserCategoryChoice(String prompt) {
         while (true) {
             System.out.print(prompt);
