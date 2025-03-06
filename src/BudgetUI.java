@@ -21,6 +21,76 @@ public class BudgetUI {
         this.scanner=scanner;
     }
 
+
+    public void setBudget(){
+
+        System.out.println(CYAN+ "Please choose from the following category list to set a budget:" +RESET);
+        System.out.println();
+        categoryManager.showCategories();
+
+        int choice=getUserCategoryChoice(CYAN+ "Enter the number of your chosen category: " +RESET);
+        String category= categoryManager.getCategories().get(choice-1).getType();
+
+        double amount=getValidAmount(CYAN+ "Enter budget amount (In BDT): " +RESET);
+
+        try {
+            budgetManager.setCategoryBudget(category,amount);
+            System.out.println(GREEN+ "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " with amount BDT " +amount+ " set successfully." +RESET);
+            try {
+                budgetManager.checkBudgetLimit();
+            } catch (BudgetExceededIncomeException e) {
+                System.out.println(YELLOW + e.getMessage() + RESET);
+            }
+        } catch (BudgetExistsException | CategoryDoesnotExistsException e) {
+            System.out.println(RED + "❌ " + e.getMessage() + RESET);
+        }
+    }
+
+    
+
+    public int getUserCategoryChoice(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                int choice = Integer.parseInt(scanner.nextLine().trim());
+                if (choice >= 1 && choice <= categoryManager.getCategories().size()) {
+                    return choice;
+                } else {
+                    System.out.println(RED + "⚠ Invalid choice! Try again." + RESET);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(RED + "⚠ Invalid choice! Try again." + RESET);
+            }
+        }
+    }
+
+
+    public double getValidAmount(String prompt) {
+
+        double amount;
+
+        while (true) {
+            try {
+                System.out.print(prompt);
+                amount = Double.parseDouble(scanner.nextLine());
+
+                if (amount >0 ) {
+                    return amount;
+                }
+                else {
+                    System.out.println(RED + "⚠ Invalid input.Please enter a valid amount." +RESET);
+                }
+
+
+            } catch (NumberFormatException e) {
+                System.out.println(RED + "⚠ Invalid input! Please enter a valid numeric amount." +RESET);
+            }
+        }
+    }
+
+
+
+
     public String getCategoryFromUserInput(String prompt) {
 
         while (true) {
