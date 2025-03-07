@@ -1,3 +1,5 @@
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,6 +7,8 @@ import java.util.Scanner;
 public class BudgetUI {
     private BudgetManager budgetManager;
     private CategoryManager categoryManager;
+    private Month month;
+    private Year year;
     Scanner scanner;
 
 
@@ -15,9 +19,11 @@ public class BudgetUI {
     private static final String CYAN = "\u001B[36m";
 
 
-    public BudgetUI(BudgetManager budgetManager,CategoryManager categoryManager,Scanner scanner){
+    public BudgetUI(BudgetManager budgetManager,CategoryManager categoryManager,Month month,Year year,Scanner scanner){
         this.budgetManager=budgetManager;
         this.categoryManager=categoryManager;
+        this.month=month;
+        this.year=year;
         this.scanner=scanner;
     }
 
@@ -47,48 +53,61 @@ public class BudgetUI {
     }
 
 
-    public void editBudget(){
+    public void editBudget() {
 
-        String category=getCategoryFromUserInput(CYAN+ "Enter the number of the budget you want to edit: " +RESET);
+        if (budgetManager.getBudgets().isEmpty()) {
+            System.out.println("No budgets available right now.");
+        }
+        else {
 
-        if (category==null){
+            showBudgets();
+
+            String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to edit: " + RESET);
+
+       /* if (category==null){
             System.out.println("No budgets available right now.");
             return;
-        }
+        }*/
 
-        double amount=getValidAmount(CYAN+ "Enter new amount (In BDT): " +RESET);
-
-        try {
-            budgetManager.editCategoryBudget(category,amount);
-            System.out.println(GREEN + "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " updated to BDT " +amount +"." +RESET);
             try {
-                budgetManager.checkBudgetLimit();
-            } catch (BudgetExceededIncomeException e) {
-                System.out.println(YELLOW + e.getMessage() + RESET);
+                double amount = getValidAmount(CYAN + "Enter new amount (In BDT): " + RESET);
+                budgetManager.editCategoryBudget(category, amount);
+                System.out.println(GREEN + "✅ Budget for category " + StringFormatter.capitalizeFirstLetter(category) + " updated to BDT " + amount + "." + RESET);
+                try {
+                    budgetManager.checkBudgetLimit();
+                } catch (BudgetExceededIncomeException e) {
+                    System.out.println(YELLOW + e.getMessage() + RESET);
+                }
+            } catch (BudgetNotFoundException e) {
+                System.out.println(RED + e.getMessage() + RESET);
             }
-        } catch (BudgetNotFoundException e) {
-            System.out.println(RED + e.getMessage() + RESET);
         }
     }
 
 
-    public void deleteBudget(){
+    public void deleteBudget() {
 
-        String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to delete: " +RESET);
-
-        if (category == null) {
+        if (budgetManager.getBudgets().isEmpty()) {
             System.out.println("No budgets available right now.");
-            return;
         }
+        else {
+            showBudgets();
 
-        try {
-            budgetManager.deleteCategoryBudget(category);
-            System.out.println(GREEN + "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " deleted successfully." +RESET);
-        } catch (BudgetNotFoundException e) {
-            System.out.println(RED + e.getMessage() + RESET);
+            String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to delete: " + RESET);
+
+            /*if (category == null) {
+                System.out.println("No budgets available right now.");
+                return;
+            }*/
+
+            try {
+                budgetManager.deleteCategoryBudget(category);
+                System.out.println(GREEN + "✅ Budget for category " + StringFormatter.capitalizeFirstLetter(category) + " deleted successfully." + RESET);
+            } catch (BudgetNotFoundException e) {
+                System.out.println(RED + e.getMessage() + RESET);
+            }
         }
     }
-
 
     public void showBudgets(){
 
@@ -96,6 +115,7 @@ public class BudgetUI {
             System.out.println("No budgets available right now.");
         }
         else {
+            System.out.println(CYAN+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year + ":" +RESET);
             budgetManager.showAllBudgets();
         }
     }
