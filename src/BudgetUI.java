@@ -115,7 +115,7 @@ public class BudgetUI {
             System.out.println("No budgets available right now.");
         }
         else {
-            System.out.println(CYAN+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year + ":" +RESET);
+            System.out.println(CYAN+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + ":" +RESET);
             budgetManager.showAllBudgets();
         }
     }

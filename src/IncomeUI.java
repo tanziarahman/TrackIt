@@ -26,31 +26,31 @@ public class IncomeUI {
     public void setIncome(){
 
         if(budgetManager.getMonthlyIncome()==0){
-            double amount=getValidAmount(CYAN + "Please set up your monthly income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year + " to get started: " +RESET);
+            double amount=getValidAmount(CYAN + "Please set up your monthly income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + " to get started: " +RESET);
             budgetManager.SetMonthlyIncome(amount);
-            System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year + "set to BDT " +amount + " successfully" +RESET);
+            System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "set to BDT " +amount + " successfully" +RESET);
         }
     }
 
     public void viewMonthlyIncome(){
-        System.out.println(CYAN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year + ": BDT " +budgetManager.getMonthlyIncome() +RESET);
+        System.out.println(CYAN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + ": BDT " +budgetManager.getMonthlyIncome() +RESET);
     }
 
 
     public void editIncome(){
-        System.out.println(CYAN + "Current Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year + ": BDT " +budgetManager.getMonthlyIncome() +RESET);
+        System.out.println(CYAN + "Current Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + ": BDT " +budgetManager.getMonthlyIncome() +RESET);
         System.out.println();
         double amount=getValidAmount(CYAN + "Enter new amount (In BDT): " +RESET);
         budgetManager.SetMonthlyIncome(amount);
-        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year + "updated to BDT " +amount + " successfully" +RESET);
+        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "updated to BDT " +amount + " successfully" +RESET);
     }
 
     public void addToIncome(){
-        System.out.println(CYAN + "Current Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year + ": BDT " +budgetManager.getMonthlyIncome() +RESET);
+        System.out.println(CYAN + "Current Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + ": BDT " +budgetManager.getMonthlyIncome() +RESET);
         System.out.println();
         double amount=getValidAmount(CYAN+ "Enter the amount you want to add (In BDT): " +RESET);
         budgetManager.addToIncome(amount);
-        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year + "updated to BDT " +budgetManager.getMonthlyIncome() + " successfully" +RESET);
+        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "updated to BDT " +budgetManager.getMonthlyIncome() + " successfully" +RESET);
     }
 
 
