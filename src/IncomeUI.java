@@ -26,7 +26,7 @@ public class IncomeUI {
     public void setIncome(){
         double amount=getValidAmount(CYAN + "Enter your monthly income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + " (In BDT): " +RESET);
         budgetManager.SetMonthlyIncome(amount);
-        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "set to BDT " +amount + " successfully" +RESET);
+        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " set to BDT " +amount + " successfully" +RESET);
     }
 
     public void viewMonthlyIncome(){
@@ -39,7 +39,7 @@ public class IncomeUI {
         System.out.println();
         double amount=getValidAmount(CYAN + "Enter new amount (In BDT): " +RESET);
         budgetManager.SetMonthlyIncome(amount);
-        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "updated to BDT " +amount + " successfully" +RESET);
+        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " updated to BDT " +amount + " successfully" +RESET);
     }
 
     public void addToIncome(){
@@ -47,7 +47,7 @@ public class IncomeUI {
         System.out.println();
         double amount=getValidAmount(CYAN+ "Enter the amount you want to add (In BDT): " +RESET);
         budgetManager.addToIncome(amount);
-        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "updated to BDT " +budgetManager.getMonthlyIncome() + " successfully" +RESET);
+        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " updated to BDT " +budgetManager.getMonthlyIncome() + " successfully" +RESET);
     }
 
 
@@ -76,6 +76,7 @@ public class IncomeUI {
                         break;
                     case 4:
                         addToIncome();
+                        break;
                     case 5:
                         return;
 
