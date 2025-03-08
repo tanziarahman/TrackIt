@@ -24,12 +24,9 @@ public class IncomeUI {
     }
 
     public void setIncome(){
-
-        if(budgetManager.getMonthlyIncome()==0){
-            double amount=getValidAmount(CYAN + "Please set up your monthly income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + " to get started: " +RESET);
-            budgetManager.SetMonthlyIncome(amount);
-            System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "set to BDT " +amount + " successfully" +RESET);
-        }
+        double amount=getValidAmount(CYAN + "Enter your monthly income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + " (In BDT): " +RESET);
+        budgetManager.SetMonthlyIncome(amount);
+        System.out.println(GREEN + "✅ Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + "set to BDT " +amount + " successfully" +RESET);
     }
 
     public void viewMonthlyIncome(){
@@ -69,15 +66,17 @@ public class IncomeUI {
 
                 switch (choice) {
                     case 1:
-                        viewMonthlyIncome();
+                        setIncome();
                         break;
                     case 2:
-                        editIncome();
+                        viewMonthlyIncome();
                         break;
                     case 3:
-                        addToIncome();
+                        editIncome();
                         break;
                     case 4:
+                        addToIncome();
+                    case 5:
                         return;
 
                     default:
@@ -86,6 +85,7 @@ public class IncomeUI {
                 }
             } else {
                 System.out.println(RED + "⚠ Invalid choice! Try again." + RESET);
+                System.out.println();
                 scanner.nextLine();
             }
 
@@ -96,10 +96,11 @@ public class IncomeUI {
     public void IncomeMenu(){
 
         System.out.println(CYAN + "\n💰 Income Management" + RESET);
-        System.out.println(GREEN + "[1] View Your Monthly Income");
-        System.out.println("[2] Edit Income Amount");
-        System.out.println("[3] Add to your Existing Income");
-        System.out.println("[4] Go Back to Main Menu" + RESET);
+        System.out.println(GREEN + "[1] Set Your Monthly Income");
+        System.out.println("[2] View Your Monthly Income");
+        System.out.println("[3] Edit Income Amount");
+        System.out.println("[4] Add to your Existing Income");
+        System.out.println("[5] Go Back to Main Menu" + RESET);
         System.out.println();
         System.out.print(YELLOW + "Choose an option: " + RESET);
     }
