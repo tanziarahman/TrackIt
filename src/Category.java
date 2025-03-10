@@ -24,12 +24,22 @@ public class Category {
         return type;
     }
     public String showSubCategories(){
-        StringBuilder subcategories = new StringBuilder();
-        subcategories.append("<<"+getType()+">>\n");
-        for (int i = 0; i < subCategories.size(); i++) {
-            subcategories.append((i + 1) + ". " + subCategories.get(i) + "\n");
+        StringBuilder string = new StringBuilder();
+        string.append("\n========================\n");
+        string.append("      "+getType()).append("\n");
+        string.append("========================\n");
+
+        // If there are no subcategories, display a message
+        if (subCategories.isEmpty()) {
+            string.append("No subcategories available.\n");
+        } else {
+            int index = 1;
+            for (String subCategory : subCategories) {
+                string.append(index++).append(". ").append(subCategory).append("\n");
+            }
         }
-        return subcategories.toString().trim();
+
+        return string.toString().trim();
     }
     public boolean subCategoryExists(String subCategory){
         if(subCategories.contains(subCategory)){
