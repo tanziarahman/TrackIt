@@ -1,9 +1,11 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CategoryManager {
     private ArrayList<Category> categories;
+    private Scanner scanner;
     public CategoryManager(){
         categories = new ArrayList<>();
         readFile();
@@ -18,48 +20,39 @@ public class CategoryManager {
             throw new CategoryExistsException("Category <<" + category + ">> already exists");
         } else {
             categories.add(new Category(category));
+            writeFile();
         }
     }
 
-    public void addCustomSubCategoryInCategory(String category, String subCategory) throws CategoryDoesnotExistsException {
-        if (!categoryExists(category)) {
-            throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist. So, sub-category <" + subCategory + "> can't be added.");
-        }
-        else {
-            categories.stream().filter(c -> c.getType().equals(category)).findFirst().ifPresent(c -> c.addSubCategory(subCategory));
-        }
-    }
-
-    public String showSubCategories(String category) throws CategoryDoesnotExistsException {
-        if (!categoryExists(category)) {
-            throw new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist.");
-        }
-
-        Category matchingCategory = categories.stream()
-                .filter(c -> c.getType().equals(category))
-                .findFirst()
-                .orElseThrow(() -> new CategoryDoesnotExistsException("Category <<" + category + ">> doesn't exist."));
-
-        List<String> subcategories = matchingCategory.getSubcategories();
-
-        // Formatting the output
-        StringBuilder string = new StringBuilder();
-        string.append("\n========================\n");
-        string.append("        Category: ").append(category).append("\n");
-        string.append("========================\n");
-
-        if (subcategories.isEmpty()) {
-            string.append("No subcategories available.\n");
-        } else {
-            int index = 1;
-            for (String subCategory : subcategories) {
-                string.append(index++).append(". ").append(subCategory).append("\n");
+    public void deleteCategoryWithSubCategories(String category) throws CategoryDoesnotExistsException {
+        boolean categoryFound = false;
+        for (Category ct : categories) {
+            if (ct.getType().equals(category)) {
+                categories.remove(ct);
+                categoryFound = true;
+                break;
             }
         }
-
-        string.append("========================\n");
-        return string.toString();
+        if (!categoryFound) {
+            throw new CategoryDoesnotExistsException("Category " + category + " does not exist.");
+        }
     }
+
+
+    public void addCustomSubCategoryInCategory(String category, String subCategory) throws CategoryDoesnotExistsException {
+        Category categoryToUpdate = categories.stream()
+                .filter(c -> c.getType().equals(category))
+                .findFirst()
+                .orElseThrow(() -> new CategoryDoesnotExistsException("Category " + category + " does not exist."));
+        categoryToUpdate.addSubCategory(subCategory);
+        writeFile();
+    }
+
+
+    public String showSubCategories(Category category){
+        return category.showSubCategories();
+    }
+
 
     public String showCategories(){
         StringBuilder string = new StringBuilder();
@@ -85,7 +78,7 @@ public class CategoryManager {
 
         for (Category c : categories) {
             string.append("\n========================\n");
-            string.append("        Category: ").append(c.getType()).append("\n");
+            string.append(" Category: ").append(c.getType()).append("\n");
             string.append("========================\n");
 
             List<String> subcategories = c.getSubcategories();
