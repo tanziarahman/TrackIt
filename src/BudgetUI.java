@@ -37,14 +37,22 @@ public class BudgetUI {
         int choice=getUserCategoryChoice(CYAN+ "Enter the number of your chosen category: " +RESET);
         String category= categoryManager.getCategories().get(choice-1).getType();
 
+        if (budgetManager.budgetExists(category)){
+            System.out.println(YELLOW+ "Budget is already set for category " + StringFormatter.capitalizeFirstLetter(category) + ". If you want, you can edit it." +RESET);
+            return;
+        }
+
         double amount=getValidAmount(CYAN+ "Enter budget amount (In BDT): " +RESET);
 
         try {
             budgetManager.setCategoryBudget(category,amount);
             System.out.println(GREEN+ "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " with amount BDT " +amount+ " set successfully." +RESET);
             try {
-                budgetManager.checkBudgetLimit();
+                if (budgetManager.getMonthlyIncome()>0){
+                    budgetManager.checkBudgetLimit();
+                }
             } catch (BudgetExceededIncomeException e) {
+                System.out.println();
                 System.out.println(YELLOW + e.getMessage() + RESET);
             }
         } catch (BudgetExistsException | CategoryDoesnotExistsException e) {
