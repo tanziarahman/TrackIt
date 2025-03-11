@@ -32,7 +32,7 @@ public class BudgetUI {
 
         System.out.println(CYAN+ "Please choose from the following category list to set a budget:" +RESET);
         System.out.println();
-        categoryManager.showCategories();
+        System.out.println(categoryManager.showCategories());
 
         int choice=getUserCategoryChoice(CYAN+ "Enter the number of your chosen category: " +RESET);
         String category= categoryManager.getCategories().get(choice-1).getType();
@@ -64,18 +64,13 @@ public class BudgetUI {
     public void editBudget() {
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets available right now.");
+            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + "available for now.");
         }
         else {
 
             showBudgets();
 
             String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to edit: " + RESET);
-
-       /* if (category==null){
-            System.out.println("No budgets available right now.");
-            return;
-        }*/
 
             try {
                 double amount = getValidAmount(CYAN + "Enter new amount (In BDT): " + RESET);
@@ -96,7 +91,7 @@ public class BudgetUI {
     public void deleteBudget() {
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets available right now.");
+            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + "available for now.");
         }
         else {
             showBudgets();
@@ -120,7 +115,7 @@ public class BudgetUI {
     public void showBudgets(){
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets available right now.");
+            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + "available for now.");
         }
         else {
             System.out.println(CYAN+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + ":" +RESET);
