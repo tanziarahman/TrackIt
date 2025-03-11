@@ -64,7 +64,7 @@ public class BudgetUI {
     public void editBudget() {
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + "available for now.");
+            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + "," +year.getValue() + " available for now.");
         }
         else {
 
@@ -91,7 +91,7 @@ public class BudgetUI {
     public void deleteBudget() {
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + "available for now.");
+            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + "," +year.getValue() + " available for now.");
         }
         else {
             showBudgets();
@@ -115,7 +115,7 @@ public class BudgetUI {
     public void showBudgets(){
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + "available for now.");
+            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + "," +year.getValue() + " available for now.");
         }
         else {
             System.out.println(CYAN+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + ":" +RESET);
