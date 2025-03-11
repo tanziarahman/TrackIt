@@ -19,36 +19,47 @@ public class BudgetUI {
     private static final String CYAN = "\u001B[36m";
 
 
-    public BudgetUI(BudgetManager budgetManager,CategoryManager categoryManager,Month month,Year year,Scanner scanner){
-        this.budgetManager=budgetManager;
-        this.categoryManager=categoryManager;
-        this.month=month;
-        this.year=year;
-        this.scanner=scanner;
+    public BudgetUI(BudgetManager budgetManager, CategoryManager categoryManager, Month month, Year year, Scanner scanner) {
+        this.budgetManager = budgetManager;
+        this.categoryManager = categoryManager;
+        this.month = month;
+        this.year = year;
+        this.scanner = scanner;
     }
 
 
-    public void setBudget(){
+    public void setBudget() {
 
-        System.out.println(CYAN+ "Please choose from the following category list to set a budget:" +RESET);
         System.out.println();
+        System.out.println(CYAN + "Please choose from the following category list to set a budget:" + RESET);
+
         System.out.println(categoryManager.showCategories());
 
-        int choice=getUserCategoryChoice(CYAN+ "Enter the number of your chosen category: " +RESET);
-        String category= categoryManager.getCategories().get(choice-1).getType();
 
-        if (budgetManager.budgetExists(category)){
-            System.out.println(YELLOW+ "Budget is already set for category " + StringFormatter.capitalizeFirstLetter(category) + ". If you want, you can edit it." +RESET);
+        int choice = getUserCategoryChoice(CYAN + "Enter the number of your chosen category (or type 'back' to return): " + RESET);
+
+        if (choice == -1) {
             return;
         }
 
-        double amount=getValidAmount(CYAN+ "Enter budget amount (In BDT): " +RESET);
+        String category = categoryManager.getCategories().get(choice - 1).getType();
+
+        if (budgetManager.budgetExists(category)) {
+            System.out.println(YELLOW + "Budget is already set for category " + StringFormatter.capitalizeFirstLetter(category) + ". If you want, you can edit it." + RESET);
+            return;
+        }
+
+        double amount = getValidAmount(CYAN + "Enter budget amount (In BDT or type 'back' to return): " + RESET);
+
+        if (amount == -1) {
+            return;
+        }
 
         try {
-            budgetManager.setCategoryBudget(category,amount);
-            System.out.println(GREEN+ "✅ Budget for category " +StringFormatter.capitalizeFirstLetter(category)+ " with amount BDT " +amount+ " set successfully." +RESET);
+            budgetManager.setCategoryBudget(category, amount);
+            System.out.println(GREEN + "✅ Budget for category " + StringFormatter.capitalizeFirstLetter(category) + " with amount BDT " + amount + " set successfully." + RESET);
             try {
-                if (budgetManager.getMonthlyIncome()>0){
+                if (budgetManager.getMonthlyIncome() > 0) {
                     budgetManager.checkBudgetLimit();
                 }
             } catch (BudgetExceededIncomeException e) {
@@ -63,17 +74,27 @@ public class BudgetUI {
 
     public void editBudget() {
 
+        System.out.println();
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + "," +year.getValue() + " available for now.");
-        }
-        else {
+            System.out.println("No budgets available for " + StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue());
+        } else {
 
             showBudgets();
+            System.out.println();
 
-            String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to edit: " + RESET);
+            String category = getCategoryFromUserInput(CYAN + "Enter the ID of the budget you want to edit (or type 'back' to return): " + RESET);
+
+            if (category == null) {
+                return;
+            }
 
             try {
-                double amount = getValidAmount(CYAN + "Enter new amount (In BDT): " + RESET);
+                double amount = getValidAmount(CYAN + "Enter new amount (In BDT or type 'back' to return): " + RESET);
+
+                if (amount == -1) {
+                    return;
+                }
+
                 budgetManager.editCategoryBudget(category, amount);
                 System.out.println(GREEN + "✅ Budget for category " + StringFormatter.capitalizeFirstLetter(category) + " updated to BDT " + amount + "." + RESET);
                 try {
@@ -90,18 +111,19 @@ public class BudgetUI {
 
     public void deleteBudget() {
 
+        System.out.println();
+
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + "," +year.getValue() + " available for now.");
-        }
-        else {
+            System.out.println("No budgets available for " + StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue());
+        } else {
             showBudgets();
+            System.out.println();
 
-            String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to delete: " + RESET);
+            String category = getCategoryFromUserInput(CYAN + "Enter the number of the budget you want to delete (or type 'back' to return): " + RESET);
 
-            /*if (category == null) {
-                System.out.println("No budgets available right now.");
+            if (category == null) {
                 return;
-            }*/
+            }
 
             try {
                 budgetManager.deleteCategoryBudget(category);
@@ -112,20 +134,20 @@ public class BudgetUI {
         }
     }
 
-    public void showBudgets(){
+    public void showBudgets() {
 
         if (budgetManager.getBudgets().isEmpty()) {
-            System.out.println("No budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + "," +year.getValue() + " available for now.");
-        }
-        else {
-            System.out.println(CYAN+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + ":" +RESET);
+            System.out.println("No budgets available for " + StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue());
+        } else {
+            System.out.println();
+            System.out.println(CYAN + "Budgets for " + StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + ":" + RESET);
+            System.out.println();
             budgetManager.showAllBudgets();
         }
     }
 
 
-
-    public void manageBudgets(){
+    public void manageBudgets() {
 
         while (true) {
 
@@ -164,7 +186,7 @@ public class BudgetUI {
     }
 
 
-    public void budgetMenu(){
+    public void budgetMenu() {
 
         System.out.println(CYAN + "\n💰 Budget Management" + RESET);
         System.out.println(GREEN + "[1] Set Budget");
@@ -177,12 +199,22 @@ public class BudgetUI {
     }
 
 
-
     public int getUserCategoryChoice(String prompt) {
         while (true) {
             System.out.print(prompt);
+
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("back")) {
+                return -1;
+            }
+
             try {
-                int choice = Integer.parseInt(scanner.nextLine().trim());
+                int choice = Integer.parseInt(input);
+
+                if (choice == 0) {
+                    return -1;
+                }
                 if (choice >= 1 && choice <= categoryManager.getCategories().size()) {
                     return choice;
                 } else {
@@ -200,25 +232,31 @@ public class BudgetUI {
         double amount;
 
         while (true) {
-            try {
-                System.out.print(prompt);
-                amount = Double.parseDouble(scanner.nextLine());
 
-                if (amount >0 ) {
+            System.out.print(prompt);
+
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("back")) {
+                return -1;
+            }
+
+            try {
+
+                amount = Double.parseDouble(input);
+
+                if (amount > 0) {
                     return amount;
-                }
-                else {
-                    System.out.println(RED + "⚠ Invalid input.Please enter a valid amount." +RESET);
+                } else {
+                    System.out.println(RED + "⚠ Invalid input.Please enter a valid amount." + RESET);
                 }
 
 
             } catch (NumberFormatException e) {
-                System.out.println(RED + "⚠ Invalid input! Please enter a valid numeric amount." +RESET);
+                System.out.println(RED + "⚠ Invalid input! Please enter a valid numeric amount." + RESET);
             }
         }
     }
-
-
 
 
     public String getCategoryFromUserInput(String prompt) {
@@ -236,12 +274,19 @@ public class BudgetUI {
                 return null;
             }
 
-            budgetManager.showAllBudgets();
+            // budgetManager.showAllBudgets();
 
             System.out.print(prompt);
             int choice;
+
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("back")) {
+                return null;
+            }
+
             try {
-                choice = Integer.parseInt(scanner.nextLine().trim());
+                choice = Integer.parseInt(input);
 
                 if (choice < 1 || choice > categoryArray.length) {
                     System.out.println(RED + "⚠ Invalid choice! Try again." + RESET);
