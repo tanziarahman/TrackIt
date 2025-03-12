@@ -1,17 +1,19 @@
-import java.io.*;
 import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ExpenseManager {
     private Month month;
+    private Year year;
     private BudgetManager budgetManager;
     private TransactionManager transactionManager;
     private List<Expense> expenses;
 
-    public ExpenseManager(Month month, BudgetManager budgetManager, TransactionManager transactionManager){
+    public ExpenseManager(Month month, Year year, BudgetManager budgetManager, TransactionManager transactionManager){
         this.month = month;
+        this.year = year;
         this.budgetManager = budgetManager;
         this.transactionManager = transactionManager;
         this.expenses = new ArrayList<>();
@@ -56,5 +58,13 @@ public class ExpenseManager {
             }
         }
         return st.toString();
+    }
+
+    public double totalExpense(){
+        double totalExpense = 0;
+        for(Transaction t: transactionManager.getTransactions()){
+            totalExpense+=t.getAmount();
+        }
+        return totalExpense;
     }
 }
