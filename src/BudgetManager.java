@@ -92,17 +92,12 @@ public class BudgetManager {
         int index=1;
 
         for (Map.Entry<String, Budget> entry : budgets.entrySet()) {
-            System.out.println(index + ". " +StringFormatter.capitalizeFirstLetter(entry.getKey()) + ": " + entry.getValue().getAmount());
+            System.out.println("["+index + "] " +StringFormatter.capitalizeFirstLetter(entry.getKey()) + ": " + entry.getValue().getAmount());
             index++;
         }
 
     }
 
-
-    public void showMonthlyIncome(){
-
-        System.out.println("Income for " + StringFormatter.capitalizeFirstLetter(month.name()) + " " +year+ " : " + this.monthlyIncome);
-    }
 
     public double getBudgetAmountForCategory(String category) throws BudgetNotFoundException{
 
