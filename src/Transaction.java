@@ -1,9 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Transaction
-
-{
+public class Transaction {
 private int transactionID;
 private double amount;
 private String category;
@@ -20,14 +18,13 @@ public Transaction(int transactionID, double amount, String category, String sub
         this.description = description;
         }
 
-
 public int getTransactionID() { return transactionID; }
+public void setTransactionID(int transactionID) { this.transactionID = transactionID; }
 public double getAmount() { return amount; }
 public String getCategory() { return category; }
 public String getSubCategory() { return subCategory; }
 public Date getDate() { return date; }
 public String getDescription() { return description; }
-
 
 public void setAmount(double amount) { this.amount = amount; }
 public void setCategory(String category) { this.category = category; }
@@ -42,14 +39,9 @@ public String toString() {
         }
 
 public static Transaction fromString(String transactionString) throws Exception {
-        transactionString = transactionString.trim();
-        if (transactionString.isEmpty()) {
-        throw new Exception("Empty transaction string provided.");
-        }
-        //System.out.println("Parsing transactionString: " + transactionString);
         String[] parts = transactionString.split(",");
         if (parts.length != 6) {
-        throw new Exception("Invalid input format. Expected 6 parts, but got " + parts.length + " in string: " + transactionString);
+        throw new Exception("Invalid transaction format.");
         }
         try {
         int transactionID = Integer.parseInt(parts[0].trim());
@@ -60,12 +52,9 @@ public static Transaction fromString(String transactionString) throws Exception 
         String description = parts[5].trim();
         return new Transaction(transactionID, amount, category, subCategory, date, description);
         } catch (NumberFormatException e) {
-        throw new Exception("Invalid number format in transaction string: " + transactionString, e);
+        throw new Exception("Invalid number format in transaction string.");
         } catch (Exception e) {
-        throw new Exception("Invalid date format in transaction string. Expected yyyy-MM-dd: " + transactionString, e);
+        throw new Exception("Invalid date format. Expected format: yyyy-MM-dd.");
         }
         }
-
-
-
         }

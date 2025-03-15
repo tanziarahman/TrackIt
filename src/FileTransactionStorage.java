@@ -23,9 +23,10 @@ public void saveAllTransactions(List<Transaction> transactions, Month month, Yea
         for (Transaction transaction : transactions) {
         bw.write(transaction.toString());
         bw.newLine();
+
         }
         }
-        }
+}
 
 public List<Transaction> loadAllTransactions(Month month, Year year) {
         List<Transaction> transactions = new ArrayList<>();

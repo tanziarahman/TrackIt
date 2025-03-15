@@ -4,7 +4,6 @@ import java.time.Year;
 import java.util.List;
 
 public interface TransactionStorage {
-
     void saveTransaction(Transaction transaction, Month month, Year year) throws IOException;
 
     void saveAllTransactions(List<Transaction> transactions, Month month, Year year) throws IOException;
