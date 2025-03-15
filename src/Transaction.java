@@ -46,7 +46,7 @@ public static Transaction fromString(String transactionString) throws Exception 
         if (transactionString.isEmpty()) {
         throw new Exception("Empty transaction string provided.");
         }
-        System.out.println("Parsing transactionString: " + transactionString);
+        //System.out.println("Parsing transactionString: " + transactionString);
         String[] parts = transactionString.split(",");
         if (parts.length != 6) {
         throw new Exception("Invalid input format. Expected 6 parts, but got " + parts.length + " in string: " + transactionString);

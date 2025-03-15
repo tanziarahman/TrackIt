@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +12,16 @@ public class TransactionManager implements TransactionManagerInterface {
     private int transactionCounter;
     private final TransactionStorage storage;
     private Month currentMonth;
+    private Year currentYear;
     private final BudgetManager budgetManager;
 
-    public TransactionManager(TransactionStorage storage, BudgetManager budgetManager, Month month) {
+    public TransactionManager(TransactionStorage storage, BudgetManager budgetManager, Month month, Year year) {
         this.storage = storage;
         this.budgetManager = budgetManager;
         this.currentMonth = month;
+        this.currentYear = year;
         try {
-            this.transactions = storage.loadAllTransactions(month);
+            this.transactions = storage.loadAllTransactions(month, year);
             this.transactionCounter = transactions.size() + 1;
         } catch (Exception e) {
             this.transactions = new ArrayList<>();
@@ -26,10 +29,11 @@ public class TransactionManager implements TransactionManagerInterface {
         }
     }
 
-    public void setMonth(Month month) {
+    public void setMonthAndYear(Month month, Year year) {
         this.currentMonth = month;
+        this.currentYear = year;
         try {
-            this.transactions = storage.loadAllTransactions(month);
+            this.transactions = storage.loadAllTransactions(month, year);
             this.transactionCounter = transactions.size() + 1;
         } catch (Exception e) {
             this.transactions = new ArrayList<>();
@@ -40,7 +44,7 @@ public class TransactionManager implements TransactionManagerInterface {
     @Override
     public Transaction addTransaction(double amount, String category, String subCategory, Date date, String description) throws IOException {
         if (!budgetManager.budgetExists(category)) {
-            throw new IllegalStateException("No budget exists for category: " + category + " in " + currentMonth.name());
+            throw new IllegalStateException("No budget exists for category: " + category + " in " + currentMonth.name() + " " + currentYear.getValue());
         }
 
         double totalAfterTransaction = totalTransactionInACategory(category) + amount;
@@ -61,7 +65,7 @@ public class TransactionManager implements TransactionManagerInterface {
         transactions.add(transaction);
         transactionCounter++;
 
-        storage.saveTransaction(transaction, currentMonth);
+        storage.saveTransaction(transaction, currentMonth, currentYear);
         return transaction;
     }
 
@@ -79,7 +83,7 @@ public class TransactionManager implements TransactionManagerInterface {
             transaction.setDate(newDate);
             transaction.setDescription(newDescription);
 
-            storage.saveAllTransactions(transactions, currentMonth);
+            storage.saveAllTransactions(transactions, currentMonth, currentYear);
         } else {
             throw new TransactionNotFoundException("Transaction with ID " + transactionID + " not found.");
         }
@@ -90,7 +94,7 @@ public class TransactionManager implements TransactionManagerInterface {
         boolean removed = transactions.removeIf(t -> t.getTransactionID() == transactionID);
 
         if (removed) {
-            storage.saveAllTransactions(transactions, currentMonth);
+            storage.saveAllTransactions(transactions, currentMonth, currentYear);
         } else {
             throw new TransactionNotFoundException("Transaction with ID " + transactionID + " not found.");
         }
@@ -133,4 +137,3 @@ public class TransactionManager implements TransactionManagerInterface {
         return transactions;
     }
 }
-
