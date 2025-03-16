@@ -220,6 +220,7 @@ public class BudgetUI {
 
         System.out.println();
         System.out.println(CYAN + "\n💰 Budget Management ["+ StringFormatter.capitalizeFirstLetter(month.name())+ " "+ year.getValue()+ "]" + RESET);
+        System.out.println();
         System.out.println(GREEN + "[1] Set Budget");
         System.out.println("[2] Edit Budget");
         System.out.println("[3] Delete Budget");

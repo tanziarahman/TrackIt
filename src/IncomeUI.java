@@ -3,6 +3,7 @@ import java.time.Year;
 import java.util.Scanner;
 
 public class IncomeUI {
+
     private BudgetManager budgetManager;
     private Month month;
     private Year year;
@@ -65,7 +66,7 @@ public class IncomeUI {
         }
         budgetManager.addToIncome(amount);
         System.out.println();
-        System.out.println(GREEN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " updated to BDT " +budgetManager.getMonthlyIncome() + " successfully." +RESET);
+        System.out.println(GREEN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " updated to BDT " +budgetManager.getMonthlyIncome() + " successfully" +RESET);
 
         System.out.println();
         System.out.println(BLUE+ "Press Enter to continue..." + RESET);
@@ -119,6 +120,7 @@ public class IncomeUI {
 
         System.out.println();
         System.out.println(CYAN + "\n💰 Income Management ["+ StringFormatter.capitalizeFirstLetter(month.name())+ " "+ year.getValue()+ "]" + RESET);
+        System.out.println();
         System.out.println(GREEN + "[1] Set/Edit Monthly Income");
         System.out.println("[2] View Monthly Income");
         System.out.println("[3] Add to Existing Income");
@@ -165,3 +167,4 @@ public class IncomeUI {
     }
 
 }
+
