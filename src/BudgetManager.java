@@ -29,7 +29,15 @@ public class BudgetManager {
         return categoryManager;
     }
 
-    public void SetMonthlyIncome( double monthlyIncome) {
+    public Month getMonth() {
+        return month;
+    }
+
+    public Year getYear() {
+        return year;
+    }
+
+    public void SetMonthlyIncome(double monthlyIncome) {
         this.monthlyIncome = monthlyIncome;
         storage.saveBudgetMonthDataToCSV(budgets,monthlyIncome,month,year);
     }
