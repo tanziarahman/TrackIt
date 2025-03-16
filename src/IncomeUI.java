@@ -147,7 +147,7 @@ public class IncomeUI {
 
                 amount = Double.parseDouble(input);
 
-                if (amount >0 ) {
+                if (amount >=0 ) {
                     return amount;
                 }
                 else {
