@@ -39,7 +39,7 @@ public class IncomeUI {
         budgetManager.SetMonthlyIncome(amount);
 
         System.out.println();
-        System.out.println(GREEN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " set to BDT " +amount + " successfully" +RESET);
+        System.out.println(GREEN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " set to BDT " +amount + " successfully." +RESET);
 
         System.out.println();
         System.out.println(BLUE+ "Press Enter to continue..." + RESET);
@@ -65,7 +65,7 @@ public class IncomeUI {
         }
         budgetManager.addToIncome(amount);
         System.out.println();
-        System.out.println(GREEN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " updated to BDT " +budgetManager.getMonthlyIncome() + " successfully" +RESET);
+        System.out.println(GREEN + "Income for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " + year.getValue() + " updated to BDT " +budgetManager.getMonthlyIncome() + " successfully." +RESET);
 
         System.out.println();
         System.out.println(BLUE+ "Press Enter to continue..." + RESET);
@@ -89,6 +89,7 @@ public class IncomeUI {
                 switch (choice) {
                     case 1:
                         setIncome();
+                        break;
                     case 2:
                         viewMonthlyIncome();
                         break;
