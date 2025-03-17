@@ -18,10 +18,12 @@ public class Category {
         return subCategories;
     }
 
+
     public void addSubCategory(String subCategory) throws SubCategoryExistsException {
         if (subCategoryExists(subCategory)) {
             System.out.println();
             throw new SubCategoryExistsException(RED+"Sub Category " + StringFormatter.capitalizeFirstLetter(subCategory) + " already exists under " + StringFormatter.capitalizeFirstLetter(getType()) + " category."+RED);
+
         }
         subCategories.add(subCategory);
     }

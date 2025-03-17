@@ -172,4 +172,3 @@ public class CategoryManager {
         return category.trim().toLowerCase();
     }
 }
-

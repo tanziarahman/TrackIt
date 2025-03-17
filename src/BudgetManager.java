@@ -1,7 +1,5 @@
-import java.io.*;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.Year;
 import java.util.Map;
 
 public class BudgetManager {
@@ -9,138 +7,133 @@ public class BudgetManager {
     CategoryManager categoryManager;
     private Map<String, Budget> budgets;
     private double monthlyIncome;
+    private IBudgetStorage storage;
+    private Month month;
+    private Year year;
 
-    public BudgetManager(CategoryManager categoryManager) {
+
+    public BudgetManager(CategoryManager categoryManager,Month month,Year year,IBudgetStorage storage){
         this.categoryManager = categoryManager;
-        budgets = new HashMap<>();
-        monthlyIncome = 0.0;
+        this.month=month;
+        this.year=year;
+        this.storage=storage;
+        this.monthlyIncome= storage.loadMonthlyIncome(month,year);
+        this.budgets=storage.loadMonthBudgetData(month,year);
+    }
+
+    public  Map<String,Budget> getBudgets(){
+        return budgets;
     }
 
     public CategoryManager getCategoryManager() {
         return categoryManager;
     }
 
-    public void SetMonthlyIncome(double monthlyIncome, Month month) {
+    public Month getMonth() {
+        return month;
+    }
+
+    public Year getYear() {
+        return year;
+    }
+
+    public void SetMonthlyIncome(double monthlyIncome) {
         this.monthlyIncome = monthlyIncome;
-        saveBudgetMonthDataToCSV(month);
+        storage.saveBudgetMonthDataToCSV(budgets,monthlyIncome,month,year);
     }
 
-    public void editIncome(double newMonthlyIncome, Month month) {
-        monthlyIncome = newMonthlyIncome;
-        saveBudgetMonthDataToCSV(month);
-    }
 
-    public void addToIncome(double additionalIncome, Month month) {
+    public void addToIncome(double additionalIncome) {
         monthlyIncome += additionalIncome;
-        saveBudgetMonthDataToCSV(month);
+        storage.saveBudgetMonthDataToCSV(budgets,monthlyIncome,month,year);
     }
 
     public double getMonthlyIncome() {
         return monthlyIncome;
     }
 
-    public void setCategoryBudget(String category, double amount, Month month) throws BudgetExistsException {
+    public void setCategoryBudget(String category, double amount) throws BudgetExistsException,CategoryDoesnotExistsException{
+
+        if(!categoryManager.categoryExists(category)){
+            throw new CategoryDoesnotExistsException("Category " +category+ " doesn't exist. Please enter a valid category.");
+
+        }
 
         if (!budgets.containsKey(category.toLowerCase())) {
             budgets.put(category.toLowerCase(), new Budget(category, amount));
         } else {
-            throw new BudgetExistsException("Budget is already set for category " + category.toLowerCase() + ". If you want, you can edit it." + "\n");
+            throw new BudgetExistsException("Budget is already set for category " + category.toLowerCase() + ". If you want, you can edit it.");
         }
 
-        saveBudgetMonthDataToCSV(month);
+        storage.saveBudgetMonthDataToCSV(budgets,monthlyIncome,month,year);
     }
 
-    public void deleteCategoryBudget(String category, Month month) throws BudgetNotFoundException {
+    public void deleteCategoryBudget(String category) throws BudgetNotFoundException {
 
         if (budgets.containsKey(category.toLowerCase())) {
             budgets.remove(category.toLowerCase());
-            // System.out.println("Budget for category " +category.toLowerCase()+ " has been deleted.");
+
         } else {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
 
-        saveBudgetMonthDataToCSV(month);
+        storage.saveBudgetMonthDataToCSV(budgets,monthlyIncome,month,year);
     }
 
-    public void editCategoryBudget(String category, double newAmount, Month month) throws BudgetNotFoundException, IOException {
+    public void editCategoryBudget(String category, double newAmount) throws BudgetNotFoundException{
 
         if (budgets.containsKey(category.toLowerCase())) {
             Budget budget = budgets.get(category.toLowerCase());
             budget.setAmount(newAmount);
-            // System.out.println("Budget for category " +category.toLowerCase()+ "updated to " +newAmount);
+
         } else {
             throw new BudgetNotFoundException("No budget found for Category " + category.toLowerCase());
         }
 
-        saveBudgetMonthDataToCSV(month);
+        storage.saveBudgetMonthDataToCSV(budgets,monthlyIncome,month,year);
     }
 
 
-    public void loadMonthBudgetData(Month month) {
-        String fileName = month.name().toLowerCase() + "Budget.csv";
-        File file = new File(fileName);
 
-        if (!file.exists()) {
-            return;
-        }
+    public void showAllBudgets() {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
-                if (data[0].equalsIgnoreCase("Income")) {
-                    this.monthlyIncome = Double.parseDouble(data[1]);
-                } else {
-                    budgets.put(data[0], new Budget(data[0], Double.parseDouble(data[1])));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading data for " + month.name().toLowerCase());
-        }
-    }
+        int index=1;
 
-
-    public void saveBudgetMonthDataToCSV(Month month) {
-
-        String fileName = month.name().toLowerCase() + "Budget.csv";
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write("Income," + this.monthlyIncome);
-            writer.newLine();
-            for (Budget budget : budgets.values()) {
-                writer.write(budget.getCategory().toLowerCase() + "," + budget.getAmount());
-                writer.newLine();
-            }
-            System.out.println("Data for " + month.name().toLowerCase() + " saved successfully.");
-        } catch (IOException e) {
-            System.out.println("Error saving data for " + month.name().toLowerCase());
-        }
-    }
-
-
-    public void showAllBudgets(Month month) {
-        //loadMonthBudgetData(month);
-
-
-        if (budgets.isEmpty() && monthlyIncome == 0) {
-            System.out.println("No data found for " + month.name().toLowerCase());
-            return;
-        }
-
-
-        System.out.println("Income for " + month.name().toLowerCase() + ": " + this.monthlyIncome);
-        System.out.println();
-        System.out.println("Budgets for " + month.name().toLowerCase() + ":");
         for (Map.Entry<String, Budget> entry : budgets.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getAmount());
-
+            System.out.println("["+index + "] " +StringFormatter.capitalizeFirstLetter(entry.getKey()) + ": " + entry.getValue().getAmount());
+            index++;
         }
 
+    }
 
-        if (budgets.isEmpty()) {
-            System.out.println("No budgets set for " + month.name().toLowerCase() + ".");
+
+    public double getBudgetAmountForCategory(String category) throws BudgetNotFoundException{
+
+        Budget budget=budgets.get(category.toLowerCase());
+
+        if(budget!=null){
+            return budget.getAmount();
+        }
+        else {
+            throw new BudgetNotFoundException("No budget found for category " +category.toLowerCase());
         }
     }
 
+    public double getTotalBudget(){
+        return budgets.values().stream().mapToDouble(Budget::getAmount).sum();
+    }
+
+
+    public void checkBudgetLimit() throws BudgetExceededIncomeException {
+        double totalBudget = getTotalBudget();
+        if(totalBudget>monthlyIncome){
+            throw new BudgetExceededIncomeException("Your total budget for " + StringFormatter.capitalizeFirstLetter(month.name()) + " is now " + totalBudget+ ". Which exceeds your monthly income of " +monthlyIncome+ ". You might want to double-check your plan!");
+        }
+    }
+
+
+    public boolean budgetExists(String category){
+        return budgets.containsKey(category.toLowerCase());
+    }
 
 }
