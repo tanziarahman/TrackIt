@@ -12,6 +12,8 @@ public class Report {
     private static final String RESET = "\u001B[0m";
     private static final String PURPLE = "\u001B[35m";
     private static final String CYAN = "\u001B[36m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String GREEN = "\u001B[32m";
 
 
     public Report(ExpenseManager expenseManager, SavingsManager savingsManager, BudgetManager budgetManager){
@@ -34,6 +36,12 @@ public class Report {
         budgets = getBudgets();
         expenses = getExpenses();
         savings = getSavings();
+
+        System.out.println("\n══════════════════════════════");
+        System.out.println(" OVERVIEW FOR " + budgetManager.getMonth()+" "+ budgetManager.getYear() );
+        System.out.println("══════════════════════════════\n");
+
+        System.out.println(CYAN+"\nTotal monthly Income: "+RESET+"BDT "+budgetManager.getMonthlyIncome());
 
         // Add table header once
         String separator = "-------------------+-------------+-------------+-------------";
@@ -77,7 +85,8 @@ public class Report {
         st.append(CYAN);
         st.append(String.format(footerFormat, "Total", totalBudget, totalExpense, totalSaving));
         st.append(RESET);
-        st.append(separator).append("\n"); // Final separator after the total row
+        System.out.println();
+        st.append(separator).append("\n");// Final separator after the total row
         st.append(grandSaving()+"\n");
         return st.toString();
     }
@@ -87,13 +96,16 @@ public class Report {
         double income = budgetManager.getMonthlyIncome();
         if(income>0){
             double grandTotalSaving = income - expenseManager.totalExpense();
-            stb.append("Total Income: "+budgetManager.getMonthlyIncome()+"\n");
-            stb.append("Total Budget: "+budgetManager.getTotalBudget()+"\n");
-            stb.append("Total Expense: "+expenseManager.totalExpense()+"\n");
-            stb.append("Grand Saving: "+((budgetManager.getMonthlyIncome())-(budgetManager.getTotalBudget()-expenseManager.totalExpense()))+"\n");
+            //stb.append("\nTotal Income: "+budgetManager.getMonthlyIncome()+"\n");
+            //stb.append("Total Budget: "+budgetManager.getTotalBudget()+"\n");
+            //stb.append("Total Expense: "+expenseManager.totalExpense()+"\n");
+            stb.append(GREEN+"\nGrand Total Saving: "+RESET +"BDT "+grandTotalSaving+"\n");
         }
         else{
-            stb.append("**Set monthly income to get grand saving**"+"\n");
+            System.out.println();
+            stb.append(YELLOW);
+            stb.append("\n** Set monthly income to get a better view **"+"\n");
+            stb.append(RESET);
         }
         return stb.toString();
     }
