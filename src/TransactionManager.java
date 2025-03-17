@@ -85,4 +85,8 @@ public class TransactionManager implements TransactionManagerInterface {
     public boolean transactionExists(int transactionID) {
         return transactions.stream().anyMatch(t -> t.getTransactionID() == transactionID);
     }
+
+    public List<Transaction> getTransactions(){
+        return transactions;
+    }
 }
