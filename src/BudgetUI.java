@@ -168,7 +168,9 @@ public class BudgetUI {
             System.out.println(RED+ "No budgets available for " +StringFormatter.capitalizeFirstLetter(month.name())+ " " +year.getValue());
         }
         else {
+            System.out.println("══════════════════════════════");
             System.out.println(PURPLE+ "Budgets for " +StringFormatter.capitalizeFirstLetter(month.name()) + " " +year.getValue() + ":" +RESET);
+            System.out.println("══════════════════════════════");
             System.out.println();
             budgetManager.showAllBudgets();
         }
