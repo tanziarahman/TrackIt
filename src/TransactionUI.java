@@ -131,7 +131,10 @@ public class TransactionUI {
         if (summary.isEmpty()) {
             System.out.println(RED + "No transactions found for the selected month and year." + RESET);
         } else {
-            System.out.println(PURPLE+"\n--- Transactions Summary ---\n" +RESET);
+            System.out.println("══════════════════════════════════════");
+            System.out.println(PURPLE+"Transaction Summary For " +TransactionManager.getCurrentMonth()+ " "+TransactionManager.getCurrentYear()+RESET);
+            System.out.println("══════════════════════════════════════");
+            System.out.println();
             System.out.println(summary);
         }
     }
