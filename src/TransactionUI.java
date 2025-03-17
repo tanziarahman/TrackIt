@@ -143,62 +143,61 @@ public class TransactionUI {
             System.out.print(YELLOW + "Press enter to return to the menu..." + RESET);
             scanner.nextLine();
             return;
-        }
-
-        while (true) {
-            try {
-                viewTransactions();
-                System.out.println();
-                System.out.print(CYAN + "Enter transaction ID to edit (or type 'back' to return): " + RESET);
-                System.out.println();
-                String input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase("back")) return;
-
-                int id = Integer.parseInt(input);
-                if (!transactionManager.transactionExists(id)) {
+        } else {
+            viewTransactions();
+            while (true) {
+                try {
                     System.out.println();
-                    System.out.println(RED + " Transaction ID not found! Please enter a valid ID." + RESET);
-                    continue;
-                }
-
-                int categoryIndex = getUserCategoryChoice();
-                if (categoryIndex == -1) return;
-                String category = categoryManager.getCategories().get(categoryIndex).getType();
-
-                if (!budgetManager.budgetExists(category)) {
+                    System.out.print(CYAN + "Enter transaction ID to edit (or type 'back' to return): " + RESET);
                     System.out.println();
-                    System.out.println(RED + " No budget exists for category: " + category + RESET);
-                    return;
+                    String input = scanner.nextLine().trim();
+                    if (input.equalsIgnoreCase("back")) return;
+
+                    int id = Integer.parseInt(input);
+                    if (!transactionManager.transactionExists(id)) {
+                        System.out.println();
+                        System.out.println(RED + " Transaction ID not found! Please enter a valid ID." + RESET);
+                        continue;
+                    }
+
+                    int categoryIndex = getUserCategoryChoice();
+                    if (categoryIndex == -1) return;
+                    String category = categoryManager.getCategories().get(categoryIndex).getType();
+
+                    if (!budgetManager.budgetExists(category)) {
+                        System.out.println();
+                        System.out.println(RED + " No budget exists for category: " + category + RESET);
+                        return;
+                    }
+
+                    int subCategoryIndex = getUserSubCategoryChoice(category);
+                    if (subCategoryIndex == -1) return;
+                    String subCategory = categoryManager.getCategories().get(categoryIndex).getSubcategories().get(subCategoryIndex);
+
+                    double amount = getValidAmount();
+                    if (amount == -1) return;
+
+                    Date date = getValidDate();
+                    if (date == null) return;
+
+                    System.out.println();
+                    System.out.print(CYAN + "Enter description (optional, press Enter to skip or write 'back' to return): " + RESET);
+                    String description = scanner.nextLine().trim();
+                    if (description.isEmpty()) {
+                        description = "No description";
+                    }
+                    if (description.equalsIgnoreCase("back")) return;
+
+                    transactionManager.editTransaction(id, amount, category, subCategory, date, description);
+                    System.out.println();
+                    System.out.println(GREEN + "Transaction edited successfully!" + RESET);
+
+                } catch (NumberFormatException e) {
+                    System.out.println(RED + "Invalid input! Please enter a valid transaction ID." + RESET);
+                } catch (Exception e) {
+                    System.out.println();
+                    System.out.println(RED + e.getMessage() + RESET);
                 }
-
-                int subCategoryIndex = getUserSubCategoryChoice(category);
-                if (subCategoryIndex == -1) return;
-                String subCategory = categoryManager.getCategories().get(categoryIndex).getSubcategories().get(subCategoryIndex);
-
-                double amount = getValidAmount();
-                if (amount == -1) return;
-
-                Date date = getValidDate();
-                if (date == null) return;
-
-                System.out.println();
-                System.out.print(CYAN + "Enter description (optional, press Enter to skip or write 'back' to return): " + RESET);
-                String description = scanner.nextLine().trim();
-                if (description.isEmpty()) {
-                    description = "No description";
-                }
-                if (description.equalsIgnoreCase("back")) return;
-
-                transactionManager.editTransaction(id, amount, category, subCategory, date, description);
-                System.out.println();
-                System.out.println(GREEN + "Transaction edited successfully!" + RESET);
-
-            }catch (NumberFormatException e) {
-                System.out.println(RED + "Invalid input! Please enter a valid transaction ID." + RESET);
-            }
-            catch (Exception e) {
-                System.out.println();
-                System.out.println(RED + e.getMessage() + RESET);
             }
         }
     }
