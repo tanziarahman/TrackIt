@@ -95,6 +95,9 @@ public void deleteTransaction(int transactionID) throws IOException {
 
 public String getTransactionsSummary() {
         transactions.sort(Comparator.comparing(Transaction::getDate));
+        for (int i = 0; i < transactions.size(); i++) {
+                transactions.get(i).setTransactionID(i + 1);
+        }
         StringBuilder summary = new StringBuilder();
         for (Transaction t : transactions) {
         summary.append("[").append(t.getTransactionID()).append("] Amount: ")
