@@ -218,33 +218,33 @@ public class TransactionUI{
             scanner.nextLine();
             return;
         }
-
-        while (true) {
-            try {
-                viewTransactions();
-                System.out.println();
-                System.out.print(CYAN + "Enter transaction ID to delete (or type 'back' to return): " + RESET);
-                String input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase("back")) return;
-
-                int id = Integer.parseInt(input);
-                if (!transactionManager.transactionExists(id)) {
+        else {
+            viewTransactions();
+            while (true) {
+                try {
                     System.out.println();
-                    System.out.println(RED + " Transaction ID not found! Please enter a valid ID." + RESET);
-                    continue;
+                    System.out.print(CYAN + "Enter transaction ID to delete (or type 'back' to return): " + RESET);
+                    String input = scanner.nextLine().trim();
+                    if (input.equalsIgnoreCase("back")) return;
+
+                    int id = Integer.parseInt(input);
+                    if (!transactionManager.transactionExists(id)) {
+                        System.out.println();
+                        System.out.println(RED + " Transaction ID not found! Please enter a valid ID." + RESET);
+                        continue;
+                    }
+
+                    transactionManager.deleteTransaction(id);
+                    System.out.println();
+                    System.out.println(GREEN + "Transaction deleted successfully!" + RESET);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println(RED + "Invalid input! Please enter a valid transaction ID." + RESET);
+                } catch (Exception e) {
+                    System.out.println();
+                    System.out.println(RED + e.getMessage() + RESET);
+
                 }
-
-                transactionManager.deleteTransaction(id);
-                System.out.println();
-                System.out.println(GREEN + "Transaction deleted successfully!" + RESET);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println(RED + "Invalid input! Please enter a valid transaction ID." + RESET);
-            }
-            catch (Exception e) {
-                System.out.println();
-                System.out.println(RED + e.getMessage() + RESET);
-
             }
         }
 
