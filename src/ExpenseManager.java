@@ -22,12 +22,21 @@ public class ExpenseManager {
         return month;
     }
 
-
+    public List<Expense> getExpenses(){
+        expenses.clear();
+        calculateExpense();
+        return expenses;
+    }
     private void calculateExpense(){
-        for(Transaction tr : transactionManager.getTransactions()){
-            String ct = tr.getCategory();
-            double am = tr.getAmount();
-            Expense exp = new Expense(ct,am);
+        for(Map.Entry<String,Budget> bg: budgetManager.getBudgets().entrySet()){
+            String bgCategory = StringFormatter.capitalizeFirstLetter(bg.getKey());
+            double expense = 0;
+            for(Transaction t:transactionManager.getTransactions()){
+                if(t.getCategory().equals(bgCategory)){
+                    expense+=t.getAmount();
+                }
+            }
+            Expense exp = new Expense(bgCategory,expense);
             expenses.add(exp);
         }
     }
@@ -62,8 +71,8 @@ public class ExpenseManager {
 
     public double totalExpense(){
         double totalExpense = 0;
-        for(Transaction t: transactionManager.getTransactions()){
-            totalExpense+=t.getAmount();
+        for(Expense exp:expenses){
+            totalExpense+=exp.getAmount();
         }
         return totalExpense;
     }
