@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Calendar;
 
-public class TransactionUI {
+public class TransactionUI{
     private final TransactionManager transactionManager;
     private final BudgetManager budgetManager;
     private final CategoryManager categoryManager;
@@ -31,6 +31,7 @@ public class TransactionUI {
             System.out.println(CYAN + "\n💸 Transaction Management ["
                     + StringFormatter.capitalizeFirstLetter(TransactionManager.getCurrentMonth().name())
                     + " " + TransactionManager.getCurrentYear().getValue() + "]" + RESET);
+            System.out.println();
             System.out.println(GREEN + "[1] Add Transaction");
             System.out.println("[2] View Transactions");
             System.out.println("[3] Edit Transaction");
@@ -51,9 +52,6 @@ public class TransactionUI {
             switch (choice) {
                 case 1:
                     addTransaction();
-                    System.out.println();
-                    System.out.print(BLUE + "Press Enter to continue..." + RESET);
-                    scanner.nextLine();
                     break;
                 case 2:
                     viewTransactions();
@@ -63,15 +61,9 @@ public class TransactionUI {
                     break;
                 case 3:
                     editTransaction();
-                    System.out.println();
-                    System.out.print(BLUE + "Press Enter to continue..." + RESET);
-                    scanner.nextLine();
                     break;
                 case 4:
                     deleteTransaction();
-                    System.out.println();
-                    System.out.print(BLUE+ "Press Enter to continue..." + RESET);
-                    scanner.nextLine();
                     break;
                 case 5:
                     return;
@@ -109,7 +101,7 @@ public class TransactionUI {
             System.out.print(CYAN + "Enter description (optional, press Enter to skip or write 'back' to return): " + RESET);
             String description = scanner.nextLine().trim();
             if (description.isEmpty()) {
-                description = "No description provided.";
+                description = "No description";
             }
             if (description.equalsIgnoreCase("back")) return;
             System.out.println();
@@ -122,6 +114,10 @@ public class TransactionUI {
             System.out.println();
             System.out.println(RED+ e.getMessage() + RESET);
         }
+
+        System.out.println();
+        System.out.print(BLUE + "Press Enter to continue..." + RESET);
+        scanner.nextLine();
 
     }
 
@@ -143,16 +139,18 @@ public class TransactionUI {
         if (transactionManager.getTransactionsSummary().isEmpty()) {
             System.out.println();
             System.out.println(RED + "No transactions found for the selected month and year." + RESET);
-            System.out.print(YELLOW + "Press enter to return to the menu..." + RESET);
-            scanner.nextLine();
-            return;
-        } else {
+        }
+
+        else {
+
             viewTransactions();
+
             while (true) {
+
                 try {
+
                     System.out.println();
                     System.out.print(CYAN + "Enter transaction ID to edit (or type 'back' to return): " + RESET);
-                    System.out.println();
                     String input = scanner.nextLine().trim();
                     if (input.equalsIgnoreCase("back")) return;
 
@@ -197,6 +195,7 @@ public class TransactionUI {
                     break;
 
                 } catch (NumberFormatException e) {
+                    System.out.println();
                     System.out.println(RED + "Invalid input! Please enter a valid transaction ID." + RESET);
                 } catch (Exception e) {
                     System.out.println();
@@ -204,6 +203,11 @@ public class TransactionUI {
                 }
             }
         }
+
+        System.out.println();
+        System.out.print(BLUE + "Press Enter to continue..." + RESET);
+        scanner.nextLine();
+
     }
 
     private void deleteTransaction() {
@@ -243,6 +247,10 @@ public class TransactionUI {
 
             }
         }
+
+        System.out.println();
+        System.out.print(BLUE + "Press Enter to continue..." + RESET);
+        scanner.nextLine();
     }
 
     private double getValidAmount() {
@@ -300,7 +308,7 @@ public class TransactionUI {
 
                     if (month < 1 || month > 12) {
                         System.out.println();
-                        System.out.println(RED + "Invalid month! Month should be between 1 and 12." + RESET);
+                        System.out.println(RED + "Invalid month! Month should be between January and December." + RESET);
                         continue;
                     }
 
@@ -310,9 +318,8 @@ public class TransactionUI {
                         continue;
                     }
 
-                    // Create date object
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    sdf.setLenient(false); // Ensures strict validation
+                    sdf.setLenient(false);
                     Date date = sdf.parse(dateString);
 
                     if (isValidDate(date)) {
@@ -349,7 +356,7 @@ public class TransactionUI {
         System.out.println();
         System.out.println(BLUE + "\nSelect a Category from the following list:" + RESET);
         for (int i = 0; i < categories.size(); i++) {
-            System.out.println("[" + (i + 1) + "] " + categories.get(i).getType());
+            System.out.println("[" + (i + 1) + "] " + StringFormatter.capitalizeFirstLetter(categories.get(i).getType()));
         }
         while (true) {
             System.out.println();
@@ -384,7 +391,7 @@ public class TransactionUI {
         System.out.println();
         System.out.println(BLUE + "\nSelect a Sub-Category from " + category + ":" + RESET);
         for (int i = 0; i < subCategories.size(); i++) {
-            System.out.println("[" + (i + 1) + "] " + subCategories.get(i));
+            System.out.println("[" + (i + 1) + "] " + StringFormatter.capitalizeFirstLetter(subCategories.get(i)));
         }
         while (true) {
             System.out.println();
