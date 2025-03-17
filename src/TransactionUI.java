@@ -191,6 +191,7 @@ public class TransactionUI {
                     transactionManager.editTransaction(id, amount, category, subCategory, date, description);
                     System.out.println();
                     System.out.println(GREEN + "Transaction edited successfully!" + RESET);
+                    break;
 
                 } catch (NumberFormatException e) {
                     System.out.println(RED + "Invalid input! Please enter a valid transaction ID." + RESET);
