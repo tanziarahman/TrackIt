@@ -39,11 +39,11 @@ class DateManager {
         while (true) {
             try {
                 System.out.println();
-                System.out.print(CYAN+ "Enter month: "+RESET);
+                System.out.print(CYAN+ "Select a month: "+RESET);
                 month = Month.valueOf(scanner.next().toUpperCase());
 
                 System.out.println();
-                System.out.print(CYAN+ "Enter year: "+RESET);
+                System.out.print(CYAN+ "Select a year: "+RESET);
                 int inputYear = scanner.nextInt();
                 year = Year.of(inputYear);
 

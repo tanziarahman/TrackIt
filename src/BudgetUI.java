@@ -76,6 +76,10 @@ public class BudgetUI {
             System.out.println();
             System.out.println(RED + e.getMessage() + RESET);
         }
+
+        System.out.println();
+        System.out.println(BLUE + "Press Enter to continue..." + RESET);
+        scanner.nextLine();
     }
 
 
@@ -118,6 +122,10 @@ public class BudgetUI {
                 System.out.println(RED + e.getMessage() + RESET);
             }
         }
+
+        System.out.println();
+        System.out.println(BLUE + "Press Enter to continue..." + RESET);
+        scanner.nextLine();
     }
 
 
@@ -147,6 +155,10 @@ public class BudgetUI {
                 System.out.println(RED + e.getMessage() + RESET);
             }
         }
+
+        System.out.println();
+        System.out.println(BLUE + "Press Enter to continue..." + RESET);
+        scanner.nextLine();
     }
 
     public void showBudgets(){
@@ -178,21 +190,12 @@ public class BudgetUI {
                 switch (choice) {
                     case 1:
                         setBudget();
-                        System.out.println();
-                        System.out.println(BLUE + "Press Enter to continue..." + RESET);
-                        scanner.nextLine();
                         break;
                     case 2:
                         editBudget();
-                        System.out.println();
-                        System.out.println(BLUE+ "Press Enter to continue..." + RESET);
-                        scanner.nextLine();
                         break;
                     case 3:
                         deleteBudget();
-                        System.out.println();
-                        System.out.println(BLUE+ "Press Enter to continue..." + RESET);
-                        scanner.nextLine();
                         break;
                     case 4:
                         showBudgets();
