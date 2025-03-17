@@ -100,10 +100,9 @@ public String getTransactionsSummary() {
         }
         StringBuilder summary = new StringBuilder();
         for (Transaction t : transactions) {
-        summary.append("[").append(t.getTransactionID()).append("] Amount: ")
+        summary.append("[").append(t.getTransactionID()).append(", Date: ").append(new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()))
         .append(t.getAmount()).append(", Category: ").append(t.getCategory())
-        .append(", Sub: ").append(t.getSubCategory())
-        .append(", Date: ").append(new SimpleDateFormat("yyyy-MM-dd").format(t.getDate()))
+        .append(", Sub: ").append(t.getSubCategory()).append("] Amount: ").append(t.getAmount())
         .append(", Desc: ").append(t.getDescription()).append("\n");
         }
         return summary.toString();
