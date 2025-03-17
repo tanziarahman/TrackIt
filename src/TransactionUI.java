@@ -109,7 +109,7 @@ public class TransactionUI {
             System.out.print(CYAN + "Enter description (optional, press Enter to skip or write 'back' to return): " + RESET);
             String description = scanner.nextLine().trim();
             if (description.isEmpty()) {
-                description = "No description";
+                description = "No description provided.";
             }
             if (description.equalsIgnoreCase("back")) return;
             System.out.println();
