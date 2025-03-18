@@ -8,26 +8,8 @@
         <list default="true" id="56a40a9a-8e6e-4882-b6d5-70da1d43b723" name="Changes" comment="">
             <change afterPath="$PROJECT_DIR$/src/TransactionUI.java" afterDir="false" />
             <change afterPath="$PROJECT_DIR$/src/Transaction_Test.java" afterDir="false" />
-            <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
             <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
             <change beforePath="$PROJECT_DIR$/TrackIt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TrackIt.iml" afterDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/.gitignore" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/Budget.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/BudgetExistsException.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/BudgetManager.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/BudgetNotFoundException.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/Category.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/CategoryDoesnotExistsException.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/CategoryExistsException.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/CategoryManager.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/FileTransactionStorage.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/SubCategoryExistsException.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/Transaction.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/TransactionManager.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/TransactionManagerInterface.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/TransactionNotFoundException.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/src/TransactionStorage.java" beforeDir="false" />
-            <change beforePath="$PROJECT_DIR$/src/transactions.txt" beforeDir="false" />
         </list>
         <option name="SHOW_DIALOG" value="false" />
         <option name="HIGHLIGHT_CONFLICTS" value="true" />

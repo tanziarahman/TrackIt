@@ -53,7 +53,7 @@ public class Report {
         st.append(separator).append("\n");
 
         for(Map.Entry<String,Budget> bg:budgets.entrySet()){
-            String category = StringFormatter.capitalizeFirstLetter(bg.getKey());
+            String category = bg.getKey();
             double budget = bg.getValue().getAmount();
             double expense = 0;
             double saving = 0;
@@ -75,7 +75,7 @@ public class Report {
             String footerFormat = "%-20s | %-12s | %-12s | %-12s%n";
 
             String rowFormat = "%-20s | %-12s | %-12s | %-12s%n";
-            st.append(String.format(rowFormat, category, bgt, exp, sav));
+            st.append(String.format(rowFormat, StringFormatter.capitalizeFirstLetter(category), bgt, exp, sav));
         }
         st.append("-------------------+-------------+-------------+-------------\n");
         String totalBudget = String.format("%.2f", budgetManager.getTotalBudget());
