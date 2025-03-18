@@ -29,7 +29,7 @@ public class ExpenseManager {
     }
     private void calculateExpense(){
         for(Map.Entry<String,Budget> bg: budgetManager.getBudgets().entrySet()){
-            String bgCategory = StringFormatter.capitalizeFirstLetter(bg.getKey());
+            String bgCategory = bg.getKey();
             double expense = 0;
             for(Transaction t:transactionManager.getTransactions()){
                 if(t.getCategory().equals(bgCategory)){

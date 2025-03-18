@@ -27,7 +27,7 @@ public class SavingsManager {
 
     private void calculateSavings(){
         for(Map.Entry<String,Budget> bg:budgetManager.getBudgets().entrySet()){
-            String bgCategory = StringFormatter.capitalizeFirstLetter(bg.getKey());
+            String bgCategory = bg.getKey();
             double saving = 0;
             for(Expense exp:expenses){
                 if(exp.getCategory().equals(bgCategory)){
