@@ -3,12 +3,15 @@
 **TrackIt** is a simple budgeting and expense management console application that helps to track income, expenses and savings. 
 This Java-based application provides features like:
 
-- Managing categories
-- Tracking monthly income
-- Setting and editing budgets
-- Adding and editing transactions
-- Viewing monthly reports
-- Handling date changes
+- Set and Manage Monthly Budget
+- Manage Monthly Income
+- Custom Category and Sub-category Generation
+- Manage Transactions Category-wise
+- View Transaction History
+- Alert System
+- Monitoring Expense
+- Monitoring Savings
+- Report Generation
 
 ## Features
 
