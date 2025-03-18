@@ -27,32 +27,37 @@ To run this application, you need Java 8 or later installed on your machine.
    git clone https://github.com/yourusername/trackit.git
 2. Navigate to the project directory:
 
-cd trackit
+   cd trackit
 
 3. Compile the project using Java:
 
-javac TrackIt.java
+   javac TrackIt.java
 
 4. Run the application:
 
-java TrackIt
+   java TrackIt
 
 ## Usage
 
 Once the program starts, the user will be presented with a menu offering various financial management options. The user can navigate through the menu 
 to perform actions like managing categories, adding transactions, and viewing reports.Main Menu Options:
 
-    1. Manage Categories: View, add, edit, or delete categories.
-    2. Keep Track of Monthly Income: View or update the current monthly income.
-    3. Manage Budgets: Set and manage budgets for different categories.
-    4. Manage Transactions: Add, edit, or delete transactions for the current month.
-    5. Get An Overall Monthly View: View a summary of all transactions and budgets for the current month.
-    6. Change Date: Change the current month and year for the financial management.
-    7. Exit: Exit the application.
+     **Manage Categories:** View, add, edit, or delete categories.
+     **Keep Track of Monthly Income:** View or update the current monthly income.
+     **Manage Budgets:** Set and manage budgets for different categories.
+     **Manage Transactions:** Add, edit, or delete transactions for the current month.
+     **Get An Overall Monthly View:** View a summary of all transactions and budgets for the current month.
+     **Change Date:** Change the current month and year for the financial management.
+     **Exit:** Exit the application.
 
 ## Technologies Used
 
-    -Java 
-    -File Storage: Transactions and budgets are stored in text files and CSV files for simplicity.
-    -Data Handling: The application handles the current month's transactions, budgets, and income, with the option to change the date as needed.
+    **Java** (JDK 8 or later)
+    **File Storage:** Transactions and budgets are stored in text files and CSV files for simplicity.
+    **Data Handling:** The application handles the current month's transactions, budgets, and income, with the option to change the date as needed.
+
+**Note:** This application is designed for single-user usage only. It is meant for personal finance management and does not support multiple users.
+    
+
+    
     
