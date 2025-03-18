@@ -25,7 +25,7 @@ To run this application, you need Java 8 or later installed on your machine.
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/trackit.git
-2. Navigate to the project directory:
+2. Navigate to the project Directory:
    cd trackit
 3. Compile the project using Java:
    javac TrackIt.java
