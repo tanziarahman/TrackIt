@@ -41,6 +41,7 @@ public class CategoryManager {
         if (!categoryFound) {
             throw new CategoryDoesnotExistsException("Category " + category + " does not exist.");
         }
+        writeFile();
     }
 
     public void addCustomSubCategoryInCategory(String category, String subCategory) throws CategoryDoesnotExistsException {
@@ -147,14 +148,12 @@ public class CategoryManager {
     }
 
     public void deleteSubCategory(String categoryName, String subCategory) throws CategoryDoesnotExistsException, SubCategoryDoesNotExistException {
-        // Find the category
         Category category = getCategoryByName(categoryName);
 
         if (category == null) {
             throw new CategoryDoesnotExistsException("Category <" + categoryName + "> does not exist.");
         }
 
-        // Call the method from Category class to delete subcategory
         category.deleteSubCategory(subCategory);
         writeFile();
     }
@@ -165,7 +164,7 @@ public class CategoryManager {
                 return category;
             }
         }
-        return null; // If category not found
+        return null; 
     }
 
     private String formatCategoryName(String category) {
