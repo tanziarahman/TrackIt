@@ -16,6 +16,11 @@ public class TrackIt {
 
     void run(){
 
+        System.out.println("\n" + BLUE +  "                                                                   ═════════════════════════════════════════");
+        System.out.println(               "                                                                                   TRACK IT     ");
+        System.out.println(               "                                                                   ═════════════════════════════════════════" + RESET);
+
+
         try {
 
             while (true) {
@@ -44,18 +49,9 @@ public class TrackIt {
                 TransactionUI transactionUI = new TransactionUI(transactionManager, budgetManager, categoryManager, scanner);
                 ReportUI reportUI=new ReportUI(report);
 
-                //new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                // System.out.print("\033[H\033[2J");
-                //System.out.flush();
-
-
-
-                System.out.println("\n" + BLUE +  "                                                                   ═════════════════════════════════════════");
-                System.out.println(               "                                                                                   TRACK IT     ");
-                System.out.println(               "                                                                   ═════════════════════════════════════════" + RESET);
-
-
-                System.out.println(CYAN + "Month: " +StringFormatter.capitalizeFirstLetter(month.name()) );
+                System.out.println();
+                System.out.println();
+                System.out.println(CYAN + "\nMonth: " +StringFormatter.capitalizeFirstLetter(month.name()) );
                 System.out.println("Year: " +year.getValue() +RESET);
                 System.out.println();
 
@@ -63,9 +59,6 @@ public class TrackIt {
                 System.out.println("══════════════════════════════");
                 System.out.println("         Main Menu");
                 System.out.println("══════════════════════════════");
-
-                // System.out.print("\033[H\033[2J");
-                //System.out.flush();
 
                 System.out.println(GREEN + "[1] Manage Categories");
                 System.out.println("[2] Keep Track of Monthly Income");
