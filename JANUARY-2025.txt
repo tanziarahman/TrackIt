@@ -1,0 +1,5 @@
+1,3000.0,education,Fee,2025-01-02,Fees given.
+2,500.0,healthcare,Doctor visit,2025-01-25,Visited Doctor for fever.
+3,1000.0,utilities,Gas Bill,2025-01-05,Gas Bill paid.
+4,12000.0,housing,Rent,2025-01-07,No description provided.
+5,6000.0,education,Fee,2025-01-02,No description provided.
