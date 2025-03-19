@@ -294,7 +294,6 @@ public class TransactionUI{
                         System.out.println(RED + "Invalid date! Today's date is outside the selected month/year. Please enter a valid date or change date." + RESET);
                     }
                 } else {
-                    // Split date into parts and manually check if month and day are valid
                     String[] dateParts = dateString.split("-");
                     if (dateParts.length != 3) {
                         System.out.println();
