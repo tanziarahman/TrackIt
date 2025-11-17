@@ -55,7 +55,7 @@ to perform actions like managing categories, adding transactions, and viewing re
 
 ## Technologies Used
 
-    - Java (JDK 8 or later)
+    - Java (JDK 8)
     - File Storage: Transactions and budgets are stored in text files and CSV files for simplicity.
     - Data Handling: The application handles the current month's transactions, budgets, and income, with the option to change the date as needed.
 
